@@ -1,0 +1,231 @@
+/* =========================
+   CATEGORIAS (estilo Ventas)
+========================= */
+
+.cat-container{
+  /* ✅ FULL WIDTH como ventas */
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:14px 18px 18px;
+  box-sizing:border-box;
+}
+
+/* =========================
+   TÍTULO
+========================= */
+.cat-title{
+  text-align:center;
+  margin-bottom:14px;
+  font-weight:900;
+  color:#0f172a;
+  font-size:22px;
+}
+
+/* =========================
+   FORM (card estilo ventas)
+========================= */
+.cat-form{
+  display:flex;
+  gap:10px;
+  margin-bottom:14px;
+  align-items:end;
+
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 14px 40px rgba(2,6,23,.10);
+  border:1px solid rgba(148,163,184,.35);
+  padding:16px;
+  box-sizing:border-box;
+}
+
+.cat-form input{
+  flex:1;
+  width:100%;
+  padding:12px 14px;
+  font-size:14px;
+  font-weight:800;
+  border:1px solid rgba(148,163,184,.65);
+  border-radius:12px;
+  outline:none;
+  background:#fff;
+  box-shadow:0 8px 20px rgba(2,6,23,.08);
+  box-sizing:border-box;
+  color:#0f172a;
+}
+
+.cat-form input:focus{
+  border-color:#2563eb;
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,.14),
+    0 10px 22px rgba(2,6,23,.10);
+}
+
+/* Botón (ventas primary) */
+.cat-form button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid rgba(13,110,253,.35);
+  background:#0d6efd;
+  color:#fff;
+  cursor:pointer;
+  font-weight:900;
+  font-size:14px;
+  line-height:1;
+  user-select:none;
+  white-space:nowrap;
+  box-shadow:0 6px 14px rgba(2,6,23,.10);
+  transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+}
+.cat-form button:hover{ filter:brightness(.98); }
+.cat-form button:active{ transform:translateY(1px); }
+
+/* =========================
+   CARD TABLA (estilo ventas)
+========================= */
+.cat-card{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 14px 40px rgba(2,6,23,.10);
+  border:1px solid rgba(148,163,184,.35);
+  padding:16px;
+  box-sizing:border-box;
+}
+
+/* Si tu HTML no tiene .cat-card, igual se verá pro con la tabla.
+   (Pero si puedes, envuelve la tabla en <div class="cat-card"> ... ) */
+
+/* =========================
+   TABLA (ventas style)
+========================= */
+.cat-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+  overflow:hidden;
+  border-radius:12px;
+  border:1px solid rgba(148,163,184,.35);
+  background:#fff;
+}
+
+.cat-table thead th{
+  background:#0f172a;
+  color:#fff;
+  font-weight:900;
+  font-size:12px;
+  letter-spacing:.4px;
+  padding:12px;
+  text-transform:uppercase;
+  text-align:left;
+}
+
+.cat-table tbody td{
+  padding:12px;
+  border-top:1px solid rgba(226,232,240,.9);
+  font-size:14px;
+  color:#0f172a;
+  background:#fff;
+  vertical-align:middle;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.cat-table tbody tr:hover td{
+  background:#f8fafc;
+}
+
+.center{ text-align:center; }
+
+/* =========================
+   ESTADO (pill estilo ventas)
+========================= */
+.cat-status{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  line-height:1;
+  border:1px solid transparent;
+}
+
+.cat-status.activo{
+  background:#d4f4dd;
+  color:#166534;
+  border-color:rgba(22,163,74,.25);
+}
+
+.cat-status.inactivo{
+  background:#fde2e2;
+  color:#7f1d1d;
+  border-color:rgba(220,53,69,.25);
+}
+
+/* =========================
+   BOTONES / ACCIONES (pill)
+========================= */
+.cat-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 12px;
+  border-radius:10px;
+  text-decoration:none;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+  user-select:none;
+  box-shadow:0 4px 10px rgba(2,6,23,.08);
+  transition: transform .08s ease, filter .12s ease;
+  border:1px solid #cbd5e1;
+  background:#e2e8f0;
+  color:#0f172a;
+}
+
+.cat-btn:hover{ filter:brightness(.98); }
+.cat-btn:active{ transform:translateY(1px); }
+
+.cat-btn.danger{
+  background:#fde2e2;
+  color:#7f1d1d;
+  border-color:rgba(220,53,69,.25);
+}
+
+.cat-btn.success{
+  background:#d4f4dd;
+  color:#166534;
+  border-color:rgba(22,163,74,.25);
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+.cat-empty{
+  text-align:center;
+  color:#64748b;
+  padding:18px !important;
+  font-weight:800;
+  font-style:italic;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width:720px){
+  .cat-container{ padding:14px 14px 18px; }
+  .cat-form{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .cat-form button{
+    width:100%;
+  }
+}

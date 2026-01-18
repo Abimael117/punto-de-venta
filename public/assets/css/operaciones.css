@@ -1,0 +1,92 @@
+/* ================================
+   OPERACIONES - ESTILO SICAR
+================================ */
+
+/* CONTENEDOR */
+.op-container{
+    padding: 25px;
+}
+
+/* TÍTULO */
+.op-title{
+    text-align: center;
+    color: #1f548c;
+    margin-bottom: 25px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* GRID */
+.op-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* TARJETAS */
+.op-item{
+    background: #fff;
+    padding: 22px 15px;
+    text-align: center;
+    border-radius: 12px;
+    cursor: pointer;
+
+    border-top: 4px solid #1f548c;
+    box-shadow: 0 2px 10px rgba(0,0,0,.10);
+
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.op-item:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(0,0,0,.20);
+}
+
+/* ===================================================
+   ICONOS (OFFLINE)
+   - .op-ico → emoji / unicode
+   - i       → compat si quedó algo viejo
+=================================================== */
+.op-item .op-ico,
+.op-item i{
+    font-size: 46px;
+    line-height: 1;
+    margin-bottom: 10px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #1f548c; /* por si queda algún <i> */
+}
+
+/* TÍTULO */
+.op-item h3{
+    margin: 8px 0 2px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #222;
+}
+
+/* SUBTÍTULO */
+.op-item p{
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* ================================
+   RESPONSIVE FINO
+================================ */
+@media (max-width: 520px){
+    .op-title{
+        font-size: 26px;
+    }
+
+    .op-item .op-ico,
+    .op-item i{
+        font-size: 42px;
+    }
+}

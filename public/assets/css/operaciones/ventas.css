@@ -1,0 +1,481 @@
+/* =========================
+   VENTAS (estilo Compras)
+========================= */
+
+.ventas-page{
+    /* ✅ FULL WIDTH como Artículos */
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 14px 18px 18px;
+}
+
+/* =========================
+   TOOLBAR (igual vibe Compras)
+========================= */
+.ventas-toolbar{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.module-title{
+    text-align:center;
+    margin-bottom: 14px;
+}
+
+/* ===== Botones base ===== */
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:10px 16px;
+    border-radius:10px;
+    border:1px solid rgba(15,23,42,.08);
+    cursor:pointer;
+    font-weight:800;
+    font-size:14px;
+    line-height:1;
+    transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+    user-select:none;
+    box-shadow: 0 6px 14px rgba(2,6,23,.10);
+}
+.btn:active{ transform: translateY(1px); }
+.btn:hover{ filter: brightness(.98); }
+
+/* Variantes */
+.btn.primary{
+    background:#0d6efd;
+    color:#fff;
+    border-color: rgba(13,110,253,.35);
+}
+.btn.secondary{
+    background:#e2e8f0;
+    color:#0f172a;
+    border-color:#cbd5e1;
+}
+.btn.warning{
+    background:#b45309;
+    color:#fff;
+    border-color: rgba(180,83,9,.35);
+}
+.btn.info{
+    background:#16a34a;
+    color:#fff;
+    border-color: rgba(22,163,74,.35);
+}
+.btn.danger{
+    background:#dc3545;
+    color:#fff;
+    border-color: rgba(220,53,69,.35);
+}
+
+/* ===== Layout general ===== */
+.ventas-layout{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+/* ===== Tarjetas ===== */
+.table-card{
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 14px 40px rgba(2,6,23,.10);
+    border:1px solid rgba(148,163,184,.35);
+    padding:16px;
+
+    /* ✅ asegura que el card estire */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ===== Top row (cliente + input) ===== */
+.ventas-toprow{
+    display:flex;
+    gap:14px;
+    align-items:center;
+}
+
+/* Cliente pill */
+.cliente-pill{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 12px;
+    border-radius:12px;
+    border:1px solid rgba(148,163,184,.55);
+    background:#f8fafc;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+    min-width: 260px;
+    max-width: 460px;
+}
+.cliente-pill .label{
+    font-size:12px;
+    font-weight:900;
+    color:#0f172a;
+    background:#e2e8f0;
+    border:1px solid rgba(148,163,184,.45);
+    padding:6px 10px;
+    border-radius:999px;
+}
+.cliente-pill strong{
+    font-size:14px;
+    font-weight:900;
+    color:#0f172a;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width:260px;
+}
+.cliente-pill .mini{
+    font-size:12px;
+    font-weight:900;
+    color:#1d4ed8;
+    background:#eff6ff;
+    border:1px solid rgba(59,130,246,.25);
+    padding:6px 10px;
+    border-radius:999px;
+}
+
+/* ===== Captura / input escáner ===== */
+.panel-captura{ flex:1; }
+.panel-captura input{
+    width:100%;
+    padding:14px 16px;
+    font-size:16px;
+    border:1px solid rgba(148,163,184,.65);
+    border-radius:12px;
+    outline:none;
+    box-sizing:border-box;
+    background:#fff;
+    box-shadow:0 8px 20px rgba(2,6,23,.08);
+}
+.panel-captura input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,.14), 0 10px 22px rgba(2,6,23,.10);
+}
+
+/* ===== Tabla detalle ===== */
+.tabla-detalle{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    table-layout:fixed;
+    overflow:hidden;
+    border-radius:12px;
+    border:1px solid rgba(148,163,184,.35);
+}
+.tabla-detalle thead th{
+    background:#0f172a;
+    color:#fff;
+    font-weight:900;
+    font-size:12px;
+    letter-spacing:.4px;
+    padding:12px 12px;
+    text-transform:uppercase;
+}
+.tabla-detalle tbody td{
+    padding:12px;
+    border-top:1px solid rgba(226,232,240,.9);
+    font-size:14px;
+    color:#0f172a;
+    background:#fff;
+    vertical-align:middle;
+}
+.tabla-detalle tbody tr:hover td{ background:#f8fafc; }
+
+/* Selección (para remover F6) */
+.tabla-detalle tbody tr.selected td{
+    background:#eff6ff !important;
+    box-shadow: inset 0 0 0 9999px rgba(37,99,235,.06);
+}
+.tabla-detalle tbody tr.selected td:first-child{ border-left:4px solid #2563eb; }
+
+/* Columnas */
+.tabla-detalle th:nth-child(1),
+.tabla-detalle td:nth-child(1){ width:16%; }
+
+.tabla-detalle th:nth-child(2),
+.tabla-detalle td:nth-child(2){ width:44%; }
+
+.tabla-detalle th:nth-child(3),
+.tabla-detalle td:nth-child(3){ width:10%; }
+
+.tabla-detalle th:nth-child(4),
+.tabla-detalle td:nth-child(4){ width:10%; }
+
+.tabla-detalle th:nth-child(5),
+.tabla-detalle td:nth-child(5){ width:10%; }
+
+.tabla-detalle th:nth-child(6),
+.tabla-detalle td:nth-child(6){ width:10%; }
+
+/* Alineación */
+.tabla-detalle td:nth-child(1),
+.tabla-detalle td:nth-child(2){ text-align:left; }
+
+.tabla-detalle td:nth-child(2){
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.tabla-detalle td:nth-child(3),
+.tabla-detalle td:nth-child(4),
+.tabla-detalle td:nth-child(5),
+.tabla-detalle td:nth-child(6),
+.tabla-detalle th:nth-child(3),
+.tabla-detalle th:nth-child(4),
+.tabla-detalle th:nth-child(5),
+.tabla-detalle th:nth-child(6){
+    text-align:right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ===== Totales ===== */
+.totales{
+    margin-top:14px;
+    display:flex;
+    justify-content:flex-end;
+}
+.total-pill{
+    padding:10px 14px;
+    border-radius:999px;
+    background:#d4f4dd;
+    color:#166534;
+    font-weight:900;
+    font-size:16px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid rgba(22,163,74,.25);
+    box-shadow:0 10px 24px rgba(2,6,23,.10);
+}
+#totalVenta{
+    padding:6px 12px;
+    border-radius:999px;
+    background:#ecfdf3;
+    border:1px solid #bbf7d0;
+    color:#15803d;
+    font-weight:900;
+}
+
+/* ===== Modal base (CLIENTES / ESPERA) ===== */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:9999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+.modal-window{
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 30px 90px rgba(0,0,0,.40);
+    overflow:hidden;
+    border:1px solid rgba(148,163,184,.35);
+}
+.modal-header{
+    background:#0d6efd;
+    color:#fff;
+    padding:14px 18px;
+    font-size:16px;
+    font-weight:900;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.modal-body{
+    padding:16px 18px;
+    color:#0f172a;
+}
+.modal-footer{
+    padding:12px 18px;
+    border-top:1px solid rgba(226,232,240,.95);
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    background:#f8fafc;
+}
+
+/* Botón X del modal */
+.prov-close{
+    background:rgba(255,255,255,.18);
+    color:#fff;
+    border:1px solid rgba(255,255,255,.35);
+    width:34px;
+    height:34px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: filter .12s ease, transform .08s ease;
+}
+.prov-close:hover{ filter: brightness(1.06); }
+.prov-close:active{ transform: translateY(1px); }
+
+/* ===== Modal clientes/espera: topbar / search ===== */
+.prov-topbar{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.prov-search{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:#f8fafc;
+    border:1px solid rgba(148,163,184,.55);
+    border-radius:12px;
+    padding:10px 12px;
+}
+.prov-search input{
+    border:none;
+    outline:none;
+    background:transparent;
+    width:100%;
+    font-size:14px;
+}
+
+/* ===== Tabla de modales (clientes/espera) ===== */
+.module-table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    overflow:hidden;
+    border-radius:12px;
+    border:1px solid rgba(148,163,184,.35);
+}
+.module-table thead th{
+    background:#0f172a;
+    color:#fff;
+    font-size:12px;
+    font-weight:900;
+    padding:12px;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+}
+.module-table tbody td{
+    padding:12px;
+    border-top:1px solid rgba(226,232,240,.95);
+    font-size:14px;
+    background:#fff;
+}
+.module-table tbody tr:hover td{ background:#f8fafc; }
+.module-table tbody tr.selected td{ background:#eff6ff !important; }
+
+.prov-empty{
+    text-align:center;
+    color:#64748b;
+    padding:18px !important;
+    font-weight:800;
+}
+
+/* ===== Cobro (UI del modal de cobro) ===== */
+.cobro-window{ width: 560px; max-width: 96%; }
+.cobro-header{ background:#0d6efd; }
+.cobro-title{ font-weight:900; }
+.cobro-close{
+  background: transparent; border:0; color:#fff; font-size:18px; cursor:pointer;
+}
+.cobro-total{ text-align:center; margin-bottom:14px; }
+.cobro-total-label{ font-size:13px; color:#334155; font-weight:700; }
+.cobro-total-value{ font-size:34px; font-weight:900; margin-top:4px; }
+
+.cobro-metodos{ display:flex; flex-direction:column; gap:10px; margin-top:10px; }
+.cobro-row{ display:grid; grid-template-columns: 1fr 160px; gap:12px; align-items:center; }
+.cobro-metodo{ font-weight:800; color:#0f172a; display:flex; gap:8px; align-items:center; }
+.cobro-metodo .ico{ width:22px; display:inline-flex; justify-content:center; }
+.cobro-row input{ padding:10px; border:1px solid #cfd4da; border-radius:8px; box-sizing:border-box; }
+.ref-row input{ grid-column: 2 / 3; }
+
+.cobro-cambio{ margin-top:14px; text-align:right; }
+.cobro-cambio-label{ font-size:12px; color:#64748b; font-weight:800; }
+.cobro-cambio-value{ font-size:22px; font-weight:900; margin-top:2px; }
+
+.btn.credit{
+  background:#e9eef5;
+  border:1px solid #cbd5e1;
+  color:#0f172a;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:900;
+}
+.btn.credit:hover{ filter:brightness(.98); }
+
+.cobro-credito-toggle{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.mini-note{ font-size:12px; color:#64748b; font-weight:700; }
+
+.credito-panel{
+  margin-top:12px;
+  border-top:1px dashed #e5e7eb;
+  padding-top:12px;
+}
+.credito-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:10px;
+}
+.cfield label{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  color:#334155;
+  margin-bottom:4px;
+}
+.cfield input{
+  width:100%;
+  padding:10px;
+  border:1px solid #cfd4da;
+  border-radius:8px;
+  background:#fff;
+  box-sizing:border-box;
+}
+.credito-warning{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:10px;
+  background:#fff3cd;
+  border:1px solid #ffe69c;
+  color:#7a5b00;
+  font-weight:800;
+}
+.hidden{ display:none !important; }
+
+/* ===== Ajustes responsive ===== */
+@media (max-width: 900px){
+    .ventas-toprow{
+        flex-direction:column;
+        align-items:stretch;
+    }
+    .cliente-pill{
+        width:100%;
+        max-width:100%;
+        min-width:unset;
+    }
+}
+@media (max-width: 720px){
+    .ventas-toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+    .btn{ width:100%; }
+}
+@media (max-width: 700px){
+  .cobro-row{ grid-template-columns: 1fr; }
+  .credito-grid{ grid-template-columns: 1fr; }
+  .ref-row input{ grid-column: auto; }
+}

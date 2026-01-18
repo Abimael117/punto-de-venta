@@ -1,0 +1,302 @@
+/* =========================
+   PROVEEDORES (estilo Ventas)
+   - FULL WIDTH
+   - Botones / cards / tablas / modales igual que ventas.css
+   - Mantiene clases existentes: .module-container, .form-row, .btn-primary, .action-link, .badge
+========================= */
+
+/* =========================
+   PAGE (FULL WIDTH como ventas)
+========================= */
+.module-container{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:14px 18px 18px;
+  box-sizing:border-box;
+}
+
+.module-title{
+  text-align:center;
+  margin-bottom:14px;
+  font-weight:900;
+  color:#0f172a;
+}
+
+/* =========================
+   TOOLBAR / FORM ROW (buscador + botón)
+========================= */
+.form-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-bottom:14px;
+  flex-wrap:wrap;
+}
+
+/* Input (igual vibe ventas input) */
+.form-row input{
+  flex:1;
+  min-width:240px;
+  padding:14px 16px;
+  font-size:14px;
+  font-weight:800;
+  border:1px solid rgba(148,163,184,.65);
+  border-radius:12px;
+  outline:none;
+  background:#fff;
+  box-shadow:0 8px 20px rgba(2,6,23,.08);
+  box-sizing:border-box;
+}
+
+.form-row input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.14), 0 10px 22px rgba(2,6,23,.10);
+}
+
+/* =========================
+   BOTONES (idéntico Ventas)
+========================= */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid rgba(15,23,42,.08);
+  cursor:pointer;
+  font-weight:800;
+  font-size:14px;
+  line-height:1;
+  transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+  user-select:none;
+  box-shadow:0 6px 14px rgba(2,6,23,.10);
+}
+.btn:active{ transform: translateY(1px); }
+.btn:hover{ filter: brightness(.98); }
+
+.btn.primary{ background:#0d6efd; color:#fff; border-color: rgba(13,110,253,.35); }
+.btn.secondary{ background:#e2e8f0; color:#0f172a; border-color:#cbd5e1; }
+.btn.warning{ background:#b45309; color:#fff; border-color: rgba(180,83,9,.35); }
+.btn.info{ background:#16a34a; color:#fff; border-color: rgba(22,163,74,.35); }
+.btn.danger{ background:#dc3545; color:#fff; border-color: rgba(220,53,69,.35); }
+
+/* Compat legacy: si tu HTML usa .btn-primary */
+.btn-primary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid rgba(13,110,253,.35);
+  background:#0d6efd;
+  color:#fff;
+  cursor:pointer;
+  font-weight:800;
+  font-size:14px;
+  line-height:1;
+  user-select:none;
+  transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+  box-shadow:0 6px 14px rgba(2,6,23,.10);
+}
+.btn-primary:hover{ filter: brightness(.98); }
+.btn-primary:active{ transform: translateY(1px); }
+
+/* =========================
+   CARD / TABLA (igual ventas)
+========================= */
+.table-card{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 14px 40px rgba(2,6,23,.10);
+  border:1px solid rgba(148,163,184,.35);
+  padding:16px;
+  width:100%;
+  box-sizing:border-box;
+}
+
+.module-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+  overflow:hidden;
+  border-radius:12px;
+  border:1px solid rgba(148,163,184,.35);
+}
+
+/* Header */
+.module-table thead th{
+  background:#0f172a;
+  color:#fff;
+  font-weight:900;
+  font-size:12px;
+  letter-spacing:.4px;
+  padding:12px;
+  text-transform:uppercase;
+  text-align:left;
+}
+
+/* Body */
+.module-table tbody td{
+  padding:12px;
+  border-top:1px solid rgba(226,232,240,.9);
+  font-size:14px;
+  color:#0f172a;
+  background:#fff;
+  vertical-align:middle;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.module-table tbody tr:hover td{ background:#f8fafc; }
+
+/* Centrar Estado y Acciones */
+.module-table th:nth-child(4),
+.module-table td:nth-child(4),
+.module-table th:nth-child(5),
+.module-table td:nth-child(5){
+  text-align:center;
+}
+
+/* =========================
+   BADGES (Estado) – estilo ventas pills
+========================= */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  line-height:1;
+  border:1px solid transparent;
+}
+
+.badge.active{
+  background:#d4f4dd;
+  color:#166534;
+  border-color:rgba(22,163,74,.25);
+}
+
+.badge.inactive{
+  background:#fde2e2;
+  color:#7f1d1d;
+  border-color:rgba(220,53,69,.25);
+}
+
+/* =========================
+   ACCIONES (activar/desactivar) – botón mini tipo ventas
+========================= */
+.action-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 12px;
+  border-radius:10px;
+  font-weight:900;
+  font-size:12px;
+  text-decoration:none;
+  cursor:pointer;
+  user-select:none;
+  border:1px solid rgba(148,163,184,.45);
+  background:#f8fafc;
+  color:#0f172a;
+  box-shadow:0 6px 14px rgba(2,6,23,.08);
+  transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+}
+.action-link:hover{ filter: brightness(.98); }
+.action-link:active{ transform: translateY(1px); }
+
+/* Variante “desactivar” */
+.action-link.deactivate{
+  background:#fde2e2;
+  color:#7f1d1d;
+  border-color:rgba(220,53,69,.25);
+}
+
+/* Variante “activar” */
+.action-link.activate{
+  background:#d4f4dd;
+  color:#166534;
+  border-color:rgba(22,163,74,.25);
+}
+
+/* =========================
+   MODAL BASE (por si lo usas en proveedores)
+========================= */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.modal-window{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 30px 90px rgba(0,0,0,.40);
+  overflow:hidden;
+  border:1px solid rgba(148,163,184,.35);
+}
+.modal-header{
+  background:#0d6efd;
+  color:#fff;
+  padding:14px 18px;
+  font-size:16px;
+  font-weight:900;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.modal-body{
+  padding:16px 18px;
+  color:#0f172a;
+}
+.modal-footer{
+  padding:12px 18px;
+  border-top:1px solid rgba(226,232,240,.95);
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  background:#f8fafc;
+}
+.prov-close{
+  background:rgba(255,255,255,.18);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.35);
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: filter .12s ease, transform .08s ease;
+}
+.prov-close:hover{ filter: brightness(1.06); }
+.prov-close:active{ transform: translateY(1px); }
+
+/* =========================
+   RESPONSIVE (igual idea ventas)
+========================= */
+@media (max-width: 720px){
+  .form-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .btn, .btn-primary{
+    width:100%;
+  }
+  .form-row input{
+    min-width:unset;
+    width:100%;
+  }
+}

@@ -1,0 +1,456 @@
+/* =========================================================
+   modal_clientes.css
+   Modales de CLIENTES + CREAR CLIENTE (rápido)
+   (NO incluye el modal de cobro)
+   ========================================================= */
+
+/* =========================
+   MODAL BASE (clientes / crear cliente)
+   ========================= */
+.modal{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: auto;
+}
+
+.modal-window{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 30px 90px rgba(0,0,0,.40);
+  overflow:hidden;
+  border:1px solid rgba(148,163,184,.35);
+  margin: 0;
+}
+
+.modal-header{
+  background:#0d6efd;
+  color:#fff;
+  padding:14px 18px;
+  font-size:16px;
+  font-weight:900;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.modal-body{
+  padding:16px 18px;
+  color:#0f172a;
+}
+
+.modal-footer{
+  padding:12px 18px;
+  border-top:1px solid rgba(226,232,240,.95);
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  background:#f8fafc;
+}
+
+/* Botón X */
+.prov-close{
+  background:rgba(255,255,255,.18);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.35);
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: filter .12s ease, transform .08s ease;
+}
+.prov-close:hover{ filter: brightness(1.06); }
+.prov-close:active{ transform: translateY(1px); }
+
+/* =========================
+   MODAL CLIENTES (selección)
+   ========================= */
+
+#modalClientes{ z-index: 10010; }
+
+.prov-topbar{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.prov-search{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#f8fafc;
+  border:1px solid rgba(148,163,184,.55);
+  border-radius:12px;
+  padding:10px 12px;
+}
+.prov-search input{
+  border:none;
+  outline:none;
+  background:transparent;
+  width:100%;
+  font-size:14px;
+}
+
+.module-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  overflow:hidden;
+  border-radius:12px;
+  border:1px solid rgba(148,163,184,.35);
+}
+.module-table thead th{
+  background:#0f172a;
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  padding:12px;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+}
+.module-table tbody td{
+  padding:12px;
+  border-top:1px solid rgba(226,232,240,.95);
+  font-size:14px;
+  background:#fff;
+}
+.module-table tbody tr:hover td{ background:#f8fafc; }
+.module-table tbody tr.selected td{ background:#eff6ff !important; }
+
+.prov-empty{
+  text-align:center;
+  color:#64748b;
+  padding:18px !important;
+  font-weight:800;
+}
+
+/* Footer de clientes: 3 botones abajo (Seleccionar / Crear / Cancelar) */
+#modalClientes .modal-footer{
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* =========================
+   MODAL CREAR CLIENTE (rápido)
+   ========================= */
+
+#modalCrearCliente{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 10060;
+  display: none;                 /* lo prendes con JS: flex */
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: auto;
+}
+
+#modalCrearCliente .modal-window{
+  width: 760px;
+  max-width: 95%;
+}
+
+/* Inputs generales */
+#modalCrearCliente input[type="text"],
+#modalCrearCliente input[type="number"],
+#modalCrearCliente input[type="email"],
+#modalCrearCliente textarea{
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(148,163,184,.65);
+  border-radius: 12px;
+  outline: none;
+  background: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+  display:block;
+}
+
+#modalCrearCliente input:focus,
+#modalCrearCliente textarea:focus{
+  border-color:#2563eb;
+  box-shadow: 0 0 0 4px rgba(37,99,235,.14), inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+/* Labels */
+#modalCrearCliente label{
+  display:block;
+  font-size:12px;
+  font-weight:900;
+  color:#334155;
+  margin: 8px 0 6px;
+}
+
+/* Grid del formulario (2 columnas) */
+#modalCrearCliente .cc-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 14px;
+}
+
+/* Campos que deben ocupar toda la fila */
+#modalCrearCliente .cc-span-2{ grid-column: 1 / -1; }
+
+/* Checkbox row */
+#modalCrearCliente .cc-check{
+  grid-column: 1 / -1;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid rgba(148,163,184,.45);
+  border-radius: 12px;
+  background: #f8fafc;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+}
+#modalCrearCliente .cc-check input[type="checkbox"]{
+  width:18px;
+  height:18px;
+}
+
+/* Error */
+#cc_error{
+  display:none;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background:#fee2e2;
+  border:1px solid #fecaca;
+  color:#991b1b;
+  font-weight:900;
+}
+
+/* Responsive */
+@media (max-width: 700px){
+  #modalCrearCliente .modal-window{ width: 92%; }
+  #modalCrearCliente .cc-grid{ grid-template-columns: 1fr; }
+  #modalCrearCliente .cc-span-2{ grid-column: auto; }
+}
+
+
+
+
+/* =========================================================
+   MODALES – CLIENTES / CREAR CLIENTE
+   ========================================================= */
+
+/* ===== Overlay base ===== */
+.modal{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* ===== Ventana ===== */
+.modal-window{
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(148,163,184,.35);
+  box-shadow: 0 30px 90px rgba(0,0,0,.45);
+  overflow: hidden;
+}
+
+/* ===== Header ===== */
+.modal-header{
+  background: #0d6efd;
+  color: #fff;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 900;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Botón cerrar */
+.prov-close{
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(255,255,255,.18);
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+.prov-close:hover{ filter: brightness(1.08); }
+
+/* ===== Body / Footer ===== */
+.modal-body{
+  padding: 18px;
+  color: #0f172a;
+}
+.modal-footer{
+  padding: 12px 18px;
+  background: #f8fafc;
+  border-top: 1px solid rgba(226,232,240,.95);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* =========================================================
+   MODAL SELECCIONAR CLIENTE
+   ========================================================= */
+
+#modalClientes{ z-index: 10010; }
+
+.prov-topbar{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.prov-search{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(148,163,184,.55);
+  background: #f8fafc;
+}
+.prov-search input{
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 14px;
+}
+
+/* Tabla */
+.module-table{
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(148,163,184,.35);
+}
+.module-table thead th{
+  background: #0f172a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 12px;
+  text-transform: uppercase;
+}
+.module-table tbody td{
+  padding: 12px;
+  border-top: 1px solid rgba(226,232,240,.95);
+}
+.module-table tbody tr:hover td{ background:#f8fafc; }
+.module-table tbody tr.selected td{
+  background:#eff6ff !important;
+}
+
+.prov-empty{
+  text-align:center;
+  padding:18px;
+  color:#64748b;
+  font-weight:800;
+}
+
+/* =========================================================
+   MODAL CREAR CLIENTE (RÁPIDO)
+   ========================================================= */
+
+#modalCrearCliente{
+  z-index: 10060;
+}
+
+#modalCrearCliente .modal-window{
+  width: 760px;
+  max-width: 95%;
+}
+
+/* ===== Grid del formulario ===== */
+#modalCrearCliente .cc-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* Campos a una sola línea */
+#modalCrearCliente .cc-span-2{
+  grid-column: 1 / -1;
+}
+
+/* Labels */
+#modalCrearCliente label{
+  display: block;
+  font-size: 12px;
+  font-weight: 900;
+  color: #334155;
+  margin-bottom: 4px;
+}
+
+/* Inputs */
+#modalCrearCliente input[type="text"],
+#modalCrearCliente input[type="email"],
+#modalCrearCliente input[type="number"],
+#modalCrearCliente textarea{
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(148,163,184,.65);
+  font-size: 14px;
+  background: #fff;
+  box-sizing: border-box;
+}
+#modalCrearCliente input:focus{
+  border-color:#2563eb;
+  box-shadow: 0 0 0 4px rgba(37,99,235,.15);
+}
+
+/* Checkbox */
+.cc-check{
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid rgba(148,163,184,.45);
+  font-weight: 900;
+}
+
+/* Error */
+#cc_error{
+  display:none;
+  grid-column: 1 / -1;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background:#fee2e2;
+  border:1px solid #fecaca;
+  color:#991b1b;
+  font-weight:900;
+}
+
+/* Responsive */
+@media (max-width: 700px){
+  #modalCrearCliente .cc-grid{
+    grid-template-columns: 1fr;
+  }
+}

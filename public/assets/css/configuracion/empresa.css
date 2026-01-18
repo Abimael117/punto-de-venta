@@ -1,0 +1,84 @@
+/* ================================
+   CONFIGURACIÓN - EMPRESA
+================================ */
+
+.empresa-container {
+    padding: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.empresa-title {
+    text-align: center;
+    color: #1f548c;
+    margin-bottom: 25px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.empresa-form {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+}
+
+.empresa-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.empresa-group label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.empresa-group input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.empresa-group input:focus {
+    outline: none;
+    border-color: #1f548c;
+}
+
+.empresa-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.empresa-actions {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.empresa-actions button {
+    background: #1f548c;
+    color: white;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.empresa-actions button:hover {
+    background: #163f6a;
+}
+
+.alert-success {
+    background: #e6f4ea;
+    color: #1e7e34;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+}

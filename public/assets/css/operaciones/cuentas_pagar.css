@@ -1,0 +1,346 @@
+/* =========================
+   CUENTAS POR PAGAR (estilo Ventas)
+   - FULL WIDTH como ventas.css
+   - Botones / cards / tablas / modales iguales
+   - Mantiene clases cp-*
+========================= */
+
+/* =========================
+   PAGE (FULL WIDTH)
+========================= */
+.cp-page{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:14px 18px 18px;
+  box-sizing:border-box;
+}
+
+.module-title{
+  text-align:center;
+  margin-bottom:14px;
+  font-weight:900;
+  color:#0f172a;
+}
+
+/* =========================
+   TOOLBAR
+========================= */
+.cp-toolbar{
+  display:flex;
+  gap:10px;
+  margin-bottom:14px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+/* =========================
+   BOTONES (idéntico Ventas)
+========================= */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid rgba(15,23,42,.08);
+  cursor:pointer;
+  font-weight:800;
+  font-size:14px;
+  line-height:1;
+  transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+  user-select:none;
+  box-shadow:0 6px 14px rgba(2,6,23,.10);
+}
+.btn:active{ transform: translateY(1px); }
+.btn:hover{ filter: brightness(.98); }
+
+.btn.primary{ background:#0d6efd; color:#fff; border-color:rgba(13,110,253,.35); }
+.btn.secondary{ background:#e2e8f0; color:#0f172a; border-color:#cbd5e1; }
+.btn.warning{ background:#b45309; color:#fff; border-color: rgba(180,83,9,.35); }
+.btn.info{ background:#16a34a; color:#fff; border-color: rgba(22,163,74,.35); }
+.btn.danger{ background:#dc3545; color:#fff; border-color:rgba(220,53,69,.35); }
+
+/* =========================
+   CARD (igual table-card)
+========================= */
+.cp-card{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 14px 40px rgba(2,6,23,.10);
+  border:1px solid rgba(148,163,184,.35);
+  padding:16px;
+  width:100%;
+  box-sizing:border-box;
+}
+
+/* =========================
+   TOPBAR
+========================= */
+.cp-topbar{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+
+/* Search (igual vibe prov-search) */
+.cp-search{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#f8fafc;
+  border:1px solid rgba(148,163,184,.55);
+  border-radius:12px;
+  padding:10px 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+  flex:1;
+  min-width:280px;
+}
+.cp-search input{
+  border:none;
+  outline:none;
+  background:transparent;
+  width:100%;
+  font-size:14px;
+  font-weight:800;
+  color:#0f172a;
+}
+
+/* KPIs (igual vibe cards) */
+.cp-kpis{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.cp-kpi{
+  border:1px solid rgba(148,163,184,.35);
+  border-radius:14px;
+  padding:10px 12px;
+  background:#fff;
+  box-shadow:0 10px 22px rgba(2,6,23,.08);
+  min-width:150px;
+}
+.cp-kpi-label{
+  font-size:12px;
+  font-weight:900;
+  color:#334155;
+}
+.cp-kpi-val{
+  margin-top:6px;
+  font-size:16px;
+  font-weight:950;
+  color:#0f172a;
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================
+   TABLE (idéntico Ventas module-table)
+========================= */
+.module-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  overflow:hidden;
+  border-radius:12px;
+  border:1px solid rgba(148,163,184,.35);
+}
+.module-table thead th{
+  background:#0f172a;
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  padding:12px;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+}
+.module-table tbody td{
+  padding:12px;
+  border-top:1px solid rgba(226,232,240,.95);
+  font-size:14px;
+  background:#fff;
+  color:#0f172a;
+  vertical-align:middle;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.module-table tbody tr:hover td{ background:#f8fafc; }
+
+.prov-empty{
+  text-align:center;
+  color:#64748b;
+  padding:18px !important;
+  font-weight:800;
+}
+
+/* =========================
+   MODAL BASE (idéntico Ventas)
+========================= */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.modal-window{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 30px 90px rgba(0,0,0,.40);
+  overflow:hidden;
+  border:1px solid rgba(148,163,184,.35);
+}
+.modal-header{
+  background:#0d6efd;
+  color:#fff;
+  padding:14px 18px;
+  font-size:16px;
+  font-weight:900;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.modal-body{ padding:16px 18px; color:#0f172a; }
+.modal-footer{
+  padding:12px 18px;
+  border-top:1px solid rgba(226,232,240,.95);
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  background:#f8fafc;
+}
+.prov-close{
+  background:rgba(255,255,255,.18);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.35);
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: filter .12s ease, transform .08s ease;
+}
+.prov-close:hover{ filter: brightness(1.06); }
+.prov-close:active{ transform: translateY(1px); }
+
+/* =========================
+   DETAIL (pills tipo KPI)
+========================= */
+.cp-detail{
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.cp-pill{
+  border:1px solid rgba(148,163,184,.35);
+  border-radius:14px;
+  padding:12px;
+  background:#fff;
+  box-shadow:0 10px 22px rgba(2,6,23,.08);
+}
+
+.cp-pill span{
+  display:block;
+  font-size:12px;
+  font-weight:900;
+  color:#334155;
+}
+
+.cp-pill strong{
+  display:block;
+  margin-top:6px;
+  font-size:16px;
+  font-weight:950;
+  color:#0f172a;
+  font-variant-numeric: tabular-nums;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* =========================
+   PAYBOX (inputs igual Ventas)
+========================= */
+.cp-paybox{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1.2fr auto;
+  gap:12px;
+  align-items:end;
+  margin:10px 0 14px;
+  padding-top:10px;
+  border-top:1px dashed rgba(226,232,240,.95);
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.field label{
+  font-size:12px;
+  font-weight:900;
+  color:#334155;
+  margin-bottom:4px;
+}
+
+/* Inputs/selects (idéntico panel-captura input) */
+.cp-select,
+.cp-paybox input{
+  width:100%;
+  padding:12px 14px;
+  font-size:14px;
+  font-weight:800;
+  border:1px solid rgba(148,163,184,.65);
+  border-radius:12px;
+  outline:none;
+  box-sizing:border-box;
+  background:#fff;
+  box-shadow:0 8px 20px rgba(2,6,23,.08);
+}
+
+.cp-select:focus,
+.cp-paybox input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.14), 0 10px 22px rgba(2,6,23,.10);
+}
+
+.cp-actions{
+  display:flex;
+  justify-content:flex-end;
+}
+
+.cp-subtitle{
+  margin:10px 0 10px;
+  font-size:14px;
+  font-weight:950;
+  color:#0f172a;
+}
+
+/* =========================
+   RESPONSIVE (igual idea Ventas)
+========================= */
+@media (max-width: 980px){
+  .cp-detail{ grid-template-columns: 1fr 1fr; }
+  .cp-paybox{ grid-template-columns: 1fr 1fr; }
+  .cp-actions{ grid-column: 1 / -1; justify-content:flex-end; }
+}
+
+@media (max-width: 720px){
+  .cp-toolbar{ flex-direction:column; align-items:stretch; }
+  .btn{ width:100%; }
+  .cp-search{ min-width:unset; width:100%; }
+  .cp-kpis{ width:100%; }
+  .cp-paybox{ grid-template-columns: 1fr; }
+  .cp-actions{ justify-content:stretch; }
+}

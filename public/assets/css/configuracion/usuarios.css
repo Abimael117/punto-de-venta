@@ -1,0 +1,233 @@
+/* =========================
+   USUARIOS (estilo Ventas)
+========================= */
+
+.user-container{
+  /* ✅ FULL WIDTH como ventas */
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:14px 18px 18px;
+  box-sizing:border-box;
+}
+
+/* =========================
+   TÍTULO
+========================= */
+.user-title{
+  text-align:center;
+  margin-bottom:14px;
+  font-weight:900;
+  color:#0f172a;
+}
+
+/* =========================
+   ALERTA (bonita, no chillona)
+========================= */
+.alert-success{
+  background:#d4f4dd;
+  color:#166534;
+  border:1px solid rgba(22,163,74,.25);
+  box-shadow:0 10px 22px rgba(2,6,23,.06);
+  padding:10px 12px;
+  border-radius:12px;
+  margin-bottom:14px;
+  font-weight:900;
+}
+
+/* =========================
+   FORMULARIO (card + grid)
+========================= */
+.user-form{
+  display:grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr auto;
+  gap:10px;
+  margin-bottom:14px;
+
+  /* card like ventas */
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 14px 40px rgba(2,6,23,.10);
+  border:1px solid rgba(148,163,184,.35);
+  padding:16px;
+  align-items:end;
+  box-sizing:border-box;
+}
+
+.user-form input,
+.user-form select{
+  width:100%;
+  padding:12px 14px;
+  font-size:14px;
+  font-weight:800;
+  border:1px solid rgba(148,163,184,.65);
+  border-radius:12px;
+  outline:none;
+  box-sizing:border-box;
+  background:#fff;
+  box-shadow:0 8px 20px rgba(2,6,23,.08);
+  color:#0f172a;
+}
+
+.user-form input:focus,
+.user-form select:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.14), 0 10px 22px rgba(2,6,23,.10);
+}
+
+/* Botón guardar (ventas primary) */
+.user-form button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid rgba(13,110,253,.35);
+  background:#0d6efd;
+  color:#fff;
+  cursor:pointer;
+  font-weight:900;
+  font-size:14px;
+  line-height:1;
+  user-select:none;
+  white-space:nowrap;
+  box-shadow:0 6px 14px rgba(2,6,23,.10);
+  transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+}
+.user-form button:hover{ filter:brightness(.98); }
+.user-form button:active{ transform:translateY(1px); }
+
+/* =========================
+   TABLA (card + tabla ventas)
+========================= */
+.user-table-wrapper{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 14px 40px rgba(2,6,23,.10);
+  border:1px solid rgba(148,163,184,.35);
+  overflow:hidden;
+  padding:16px;
+  box-sizing:border-box;
+}
+
+.user-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+  overflow:hidden;
+  border-radius:12px;
+  border:1px solid rgba(148,163,184,.35);
+}
+
+.user-table thead th{
+  background:#0f172a;
+  color:#fff;
+  font-weight:900;
+  font-size:12px;
+  letter-spacing:.4px;
+  padding:12px;
+  text-transform:uppercase;
+  text-align:left;
+}
+
+.user-table tbody td{
+  padding:12px;
+  border-top:1px solid rgba(226,232,240,.9);
+  font-size:14px;
+  color:#0f172a;
+  background:#fff;
+  vertical-align:middle;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.user-table tbody tr:hover td{
+  background:#f8fafc;
+}
+
+/* =========================
+   BADGES (pill estilo ventas)
+========================= */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  line-height:1;
+  border:1px solid transparent;
+}
+
+.badge-success{
+  background:#d4f4dd;
+  color:#166534;
+  border-color:rgba(22,163,74,.25);
+}
+
+.badge-danger{
+  background:#fde2e2;
+  color:#7f1d1d;
+  border-color:rgba(220,53,69,.25);
+}
+
+/* =========================
+   ACCIONES (pill bonita, no link subrayado)
+========================= */
+.action-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 12px;
+  border-radius:10px;
+  font-weight:900;
+  font-size:12px;
+  text-decoration:none;
+  cursor:pointer;
+  user-select:none;
+  box-shadow:0 4px 10px rgba(2,6,23,.08);
+  transition: transform .08s ease, filter .12s ease;
+  color:#0f172a;
+  background:#e2e8f0;
+  border:1px solid #cbd5e1;
+}
+
+.action-link:hover{ filter:brightness(.98); }
+.action-link:active{ transform:translateY(1px); }
+
+/* Si tienes acciones tipo desactivar/activar con clases, te las dejo listas */
+.action-link.danger{
+  background:#fde2e2;
+  border:1px solid rgba(220,53,69,.25);
+  color:#7f1d1d;
+}
+.action-link.activate{
+  background:#d4f4dd;
+  border:1px solid rgba(22,163,74,.25);
+  color:#166534;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 980px){
+  .user-form{
+    grid-template-columns: 1fr 1fr;
+  }
+  .user-form button{
+    grid-column: 1 / -1;
+    width:100%;
+  }
+}
+
+@media (max-width: 720px){
+  .user-container{ padding:14px 14px 18px; }
+  .user-form{
+    grid-template-columns: 1fr;
+  }
+  .user-form button{ width:100%; }
+}

@@ -1,0 +1,257 @@
+/* =========================
+   IMPUESTOS (estilo Ventas)
+   - FULL WIDTH opcional
+   - Inputs / botones / cards / tablas igual ventas.css
+   - Mantiene clases existentes (no rompe HTML)
+========================= */
+
+/* =========================
+   PAGE
+========================= */
+.module-container{
+  width:100%;
+  max-width:none;         /* ✅ full width como ventas */
+  margin:0;
+  padding:14px 18px 18px;
+  box-sizing:border-box;
+}
+
+.module-title{
+  text-align:center;
+  margin-bottom:14px;
+  font-weight:900;
+  color:#0f172a;
+}
+
+/* =========================
+   TOOLBAR / FORM ROW
+========================= */
+.form-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:14px;
+  align-items:center;
+}
+
+/* Inputs / selects estilo ventas */
+.form-row input,
+.form-row select,
+.select{
+  padding:12px 14px;
+  font-size:14px;
+  font-weight:800;
+  border:1px solid rgba(148,163,184,.65);
+  border-radius:12px;
+  outline:none;
+  box-sizing:border-box;
+  min-width:160px;
+  background:#fff;
+  box-shadow:0 8px 20px rgba(2,6,23,.08);
+}
+
+.form-row input:focus,
+.form-row select:focus{
+  border-color:#2563eb;
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,.14),
+    0 10px 22px rgba(2,6,23,.10);
+}
+
+/* =========================
+   CHECKS COMPACTOS (pill)
+========================= */
+.check{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-size:12px;
+  font-weight:900;
+  color:#0f172a;
+  padding:10px 12px;
+  border:1px solid rgba(148,163,184,.55);
+  border-radius:999px;
+  background:#f8fafc;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+}
+
+.check input{
+  width:18px;
+  height:18px;
+  margin:0;
+  box-shadow:none;
+  accent-color:#2563eb;
+}
+
+/* =========================
+   BOTÓN GUARDAR (ventas)
+========================= */
+.btn-primary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid rgba(13,110,253,.35);
+  background:#0d6efd;
+  color:#fff;
+  cursor:pointer;
+  font-weight:900;
+  font-size:14px;
+  line-height:1;
+  user-select:none;
+  box-shadow:0 6px 14px rgba(2,6,23,.10);
+  transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+}
+.btn-primary:hover{ filter: brightness(.98); }
+.btn-primary:active{ transform: translateY(1px); }
+
+/* =========================
+   CARD TABLA (ventas)
+========================= */
+.table-card{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 14px 40px rgba(2,6,23,.10);
+  border:1px solid rgba(148,163,184,.35);
+  padding:16px;
+  width:100%;
+  box-sizing:border-box;
+}
+
+/* =========================
+   TABLA (ventas)
+========================= */
+.module-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+  overflow:hidden;
+  border-radius:12px;
+  border:1px solid rgba(148,163,184,.35);
+}
+
+.module-table thead th{
+  background:#0f172a;
+  color:#fff;
+  font-weight:900;
+  font-size:12px;
+  letter-spacing:.4px;
+  padding:12px;
+  text-transform:uppercase;
+  text-align:left;
+}
+
+.module-table tbody td{
+  padding:12px;
+  border-top:1px solid rgba(226,232,240,.9);
+  font-size:14px;
+  color:#0f172a;
+  background:#fff;
+  vertical-align:middle;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.module-table tbody tr:hover td{
+  background:#f8fafc;
+}
+
+/* =========================
+   BADGES (activo/inactivo)
+========================= */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  line-height:1;
+  border:1px solid transparent;
+}
+
+.badge.active{
+  background:#d4f4dd;
+  color:#166534;
+  border-color:rgba(22,163,74,.25);
+}
+.badge.inactive{
+  background:#fde2e2;
+  color:#7f1d1d;
+  border-color:rgba(220,53,69,.25);
+}
+
+/* =========================
+   DOT booleano (on/off) más pro
+========================= */
+.dot{
+  width:12px;
+  height:12px;
+  border-radius:999px;
+  display:inline-block;
+  border:1px solid rgba(148,163,184,.55);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+}
+.dot.on{
+  background:#16a34a;
+  border-color:rgba(22,163,74,.55);
+  box-shadow:0 6px 14px rgba(22,163,74,.18);
+}
+.dot.off{
+  background:#e2e8f0;
+  border-color:rgba(148,163,184,.65);
+}
+
+/* =========================
+   ACCIONES (pill rojo estilo ventas)
+========================= */
+.action-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 12px;
+  border-radius:10px;
+  font-weight:900;
+  font-size:12px;
+  text-decoration:none;
+  cursor:pointer;
+  user-select:none;
+  box-shadow:0 4px 10px rgba(2,6,23,.08);
+  transition: transform .08s ease, filter .12s ease;
+}
+
+.action-link.danger{
+  color:#7f1d1d;
+  background:#fde2e2;
+  border:1px solid rgba(220,53,69,.25);
+}
+.action-link.danger:hover{ filter: brightness(.98); }
+.action-link.danger:active{ transform: translateY(1px); }
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 720px){
+  .form-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .form-row input,
+  .form-row select,
+  .select{
+    width:100%;
+    min-width:unset;
+  }
+  .btn-primary{
+    width:100%;
+  }
+  .check{
+    justify-content:flex-start;
+    width:fit-content;
+  }
+}

@@ -1,0 +1,79 @@
+.tag-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 25px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,.08);
+}
+
+.tag-title {
+    text-align: center;
+    color: #1f548c;
+    margin-bottom: 20px;
+}
+
+.tag-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tag-form input {
+    flex: 1;
+    padding: 10px;
+}
+
+.tag-form button {
+    padding: 10px 25px;
+    background: #1f548c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.tag-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tag-table th,
+.tag-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.tag-table th {
+    background: #f4f6f8;
+    text-align: left;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+}
+
+.badge-success {
+    background: #e6f6ea;
+    color: #1e7e34;
+}
+
+.badge-danger {
+    background: #fdecea;
+    color: #c82333;
+}
+
+.btn-action {
+    padding: 6px 12px;
+    background: #fdecea;
+    color: #c82333;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.btn-action:hover {
+    opacity: .85;
+}

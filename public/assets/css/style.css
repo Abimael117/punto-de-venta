@@ -1,0 +1,213 @@
+/* =======================================================
+   RESET GENERAL + LAYOUT BASE
+======================================================= */
+html, body{
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+/* =======================================================
+   NAVBAR SUPERIOR — ESTILO SICAR
+======================================================= */
+.topmenu{
+    background: #1f548c;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    gap: 55px;
+    padding: 0 30px;
+    color: #fff;
+    border-bottom: 3px solid #163a5c;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.menu-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: #fff;
+    text-align: center;
+    transition: 0.15s ease;
+}
+
+.menu-item span{
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.menu-item:hover{
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* USUARIO DERECHA */
+.user-box{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* =======================================================
+   CONTENIDO PRINCIPAL
+======================================================= */
+.main-container{
+    flex: 1;              /* Empuja el footer hacia el fondo */
+    padding: 10px;
+    padding-top: 0px;     /* Espacio debajo del navbar */
+}
+
+/* =======================================================
+   TARJETAS GENÉRICAS
+======================================================= */
+.card{
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* =======================================================
+   LOGIN PAGE
+======================================================= */
+.login-body{
+    background: #e9eef3;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box{
+    width: 360px;
+    padding: 32px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn{
+    from{ opacity: 0; transform: translateY(-10px); }
+    to{ opacity: 1; transform: translateY(0); }
+}
+
+.error{
+    background: #ffdddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-left: 4px solid red;
+    border-radius: 5px;
+}
+
+/* =======================================================
+   FOOTER (FIJO AL FONDO)
+======================================================= */
+.footer{
+    background: #1E5A8A;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 13px;
+    margin-top: auto;
+    width: 100%;
+}
+
+/* =======================================================
+   ICONOS NAVBAR (OFFLINE)
+   - Funciona con <span class="menu-ico">🙂</span>
+   - Y también si queda algún <i> por ahí
+======================================================= */
+.topmenu .menu-item .menu-ico,
+.topmenu .menu-item i{
+    font-size: 42px;
+    margin-bottom: 6px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.topmenu .user-box .menu-ico,
+.topmenu .user-box i{
+    font-size: 34px;
+    margin-bottom: 0;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+      .user-box{
+        margin-left:auto;
+        display:flex;
+        align-items:center;
+        gap:10px;
+        padding:10px 14px;
+        border-radius:999px;
+        background:rgba(255,255,255,.14);
+        border:1px solid rgba(255,255,255,.22);
+        color:#fff;
+        font-weight:900;
+        cursor:pointer;
+        user-select:none;
+        position:relative;
+      }
+      .user-box:hover{ filter:brightness(1.06); }
+      .user-box:active{ transform:translateY(1px); }
+
+      .user-caret{ opacity:.9; font-size:12px; margin-left:2px; }
+
+      .user-menu{
+        position:absolute;
+        right:0;
+        top:calc(100% + 10px);
+        min-width:220px;
+        background:#fff;
+        border-radius:14px;
+        border:1px solid rgba(148,163,184,.35);
+        box-shadow:0 18px 50px rgba(2,6,23,.18);
+        overflow:hidden;
+        z-index:9999;
+        display:none;
+      }
+      .user-item{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        padding:12px 14px;
+        text-decoration:none;
+        font-weight:900;
+        color:#0f172a;
+        border-top:1px solid rgba(226,232,240,.85);
+        background:#fff;
+      }
+      .user-item:first-child{ border-top:none; }
+      .user-item:hover{ background:#f8fafc; }
+
+      .user-item.danger{ color:#b91c1c; }
+      .user-item.danger:hover{ background:#fff1f2; }
+
+      /* Para que no rompa tu layout si user-box ya tenía estilos en style.css */
+      .topmenu{ position:relative; }
+
+
+      .user-divider{
+  height:1px;
+  background: rgba(15,23,42,.08);
+  margin: 6px 0;
+}

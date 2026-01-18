@@ -1,0 +1,91 @@
+.emp-container {
+    padding: 25px;
+    max-width: 900px;
+    margin: auto;
+}
+
+/* ---------- TÍTULO ---------- */
+.emp-title {
+    text-align: center;
+    color: #1f548c;
+    margin-bottom: 20px;
+}
+
+/* ---------- FORM ---------- */
+.emp-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.emp-form input {
+    flex: 1;
+    padding: 10px;
+}
+
+.emp-form button {
+    padding: 10px 25px;
+    background: #1f548c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ---------- TABLA ---------- */
+.emp-table-wrapper {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.08);
+    overflow: hidden;
+}
+
+.emp-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.emp-table th,
+.emp-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.emp-table th {
+    background: #f4f6f8;
+    text-align: left;
+    font-weight: 600;
+}
+
+.emp-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ---------- ESTADOS ---------- */
+.status {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status.active {
+    background: #e7f6ec;
+    color: #1e7e34;
+}
+
+.status.inactive {
+    background: #fdecea;
+    color: #a71d2a;
+}
+
+/* ---------- ACCIONES ---------- */
+.action-link {
+    color: #1f548c;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.action-link:hover {
+    text-decoration: underline;
+}
