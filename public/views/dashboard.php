@@ -39,9 +39,10 @@
   </section>
 
   <!-- =========================
-       ALERTAS INTELIGENTES
+       ALERTAS
   ========================== -->
   <section class="dash-alerts">
+
     <div class="dash-alert-card">
       <div class="dash-alert-head">
         <div class="dash-alert-icon">📦</div>
@@ -80,14 +81,13 @@
         <div class="dash-empty">Cargando…</div>
       </div>
     </div>
+
   </section>
 
 </div>
 
-<!-- Chart.js (CDN) -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<!-- Chart.js (LOCAL OFFLINE) -->
+<script src="/public/assets/vendor/chartjs/chart.umd.min.js"></script>
 
-<!-- Tu JS -->
-<script src="/assets/js/components/dashboard.js"></script>
 
 <?php require __DIR__ . '/layout/footer.php'; ?>
