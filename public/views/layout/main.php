@@ -30,7 +30,7 @@
             <span class="menu-ico">💵</span>
             <span>Operaciones</span>
         </div>
-
+<!--
         <div class="menu-item" onclick="location.href='/consultas'">
             <span class="menu-ico">🔍</span>
             <span>Consultas</span>
@@ -50,7 +50,7 @@
             <span class="menu-ico">📈</span>
             <span>Estadísticas</span>
         </div>
-
+-->
         <div class="menu-item" onclick="location.href='/configuracion'">
             <span class="menu-ico">🛠️</span>
             <span>Config.</span>

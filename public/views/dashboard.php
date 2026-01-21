@@ -89,5 +89,4 @@
 <!-- Chart.js (LOCAL OFFLINE) -->
 <script src="/public/assets/vendor/chartjs/chart.umd.min.js"></script>
 
-
 <?php require __DIR__ . '/layout/footer.php'; ?>
