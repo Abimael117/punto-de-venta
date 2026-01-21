@@ -141,9 +141,8 @@ class AjusteInventarioModel {
 
     /**
      * ✅ LISTADO PARA AJUSTE
-     * - "descripcion" NO existe en articulos, es "nombre"
-     * - stock REAL se calcula desde inventario_movimientos (como Ventas)
-     * - si no hay movimientos, stock = 0
+     * - descripcion = nombre
+     * - stock desde vw_stock_actual (fallback a articulos.stock)
      */
     public function listarArticulos(string $q = ''): array {
 
@@ -155,16 +154,9 @@ class AjusteInventarioModel {
                 a.codigo,
                 a.nombre AS descripcion,
                 a.precio_compra,
-                COALESCE(SUM(
-                    CASE
-                        WHEN m.tipo = 'ENTRADA' THEN m.cantidad
-                        WHEN m.tipo = 'SALIDA'  THEN -m.cantidad
-                        ELSE 0
-                    END
-                ), 0) AS stock
+                COALESCE(vs.stock, a.stock, 0) AS stock
             FROM {$this->T_ART} a
-            LEFT JOIN {$this->T_MOVS} m
-                ON m.articulo_id = a.id
+            LEFT JOIN vw_stock_actual vs ON vs.articulo_id = a.id
             WHERE a.activo = 1
         ";
 
@@ -176,7 +168,6 @@ class AjusteInventarioModel {
         }
 
         $sql .= "
-            GROUP BY a.id, a.codigo, a.nombre, a.precio_compra
             ORDER BY a.nombre ASC
             LIMIT 500
         ";
@@ -184,6 +175,6 @@ class AjusteInventarioModel {
         $st = $this->db->prepare($sql);
         $st->execute($params);
 
-        return $st->fetchAll(PDO::FETCH_ASSOC);
+        return $st->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 }

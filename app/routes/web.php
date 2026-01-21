@@ -387,10 +387,34 @@ $routes = [
     // =========================
     // OPERACIONES - CLIENTES
     // =========================
-
     '/operaciones/clientes' => [
         'controller' => 'operaciones/ClientesController',
         'action'     => 'index'
+    ],
+
+    '/operaciones/clientes/listar' => [
+        'controller' => 'operaciones/ClientesController',
+        'action'     => 'listar'
+    ],
+
+    '/operaciones/clientes/guardar' => [
+        'controller' => 'operaciones/ClientesController',
+        'action'     => 'guardar'
+    ],
+
+    '/operaciones/clientes/actualizar' => [
+        'controller' => 'operaciones/ClientesController',
+        'action'     => 'actualizar'
+    ],
+
+    '/operaciones/clientes/eliminar' => [
+        'controller' => 'operaciones/ClientesController',
+        'action'     => 'eliminar'
+    ],
+
+    '/operaciones/clientes/obtener' => [
+        'controller' => 'operaciones/ClientesController',
+        'action'     => 'obtener'
     ],
 
     '/operaciones/clientes/crearRapido' => [

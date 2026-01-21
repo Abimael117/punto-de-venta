@@ -1,315 +1,296 @@
 /* =========================
-   CLIENTES (estilo Ventas)
-   - Replica look & feel de ventas.css
-   - NO rompe .toolbar global del layout
+   CLIENTES (estilo Ventas) — FULL WIDTH
+   - Adaptado a tu HTML actual:
+     .clientes-page, .clientes-toolbar, .table-card, .module-table, .modal...
+   - No toca .toolbar global del layout
 ========================= */
 
-/* Wrapper opcional si lo tienes */
+/* FULL WIDTH */
 .clientes-page{
-    max-width: 1100px;
-    margin: auto;
-    padding: 14px 18px 18px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 14px 18px 18px;
+  box-sizing: border-box;
 }
 
+/* Título (si lo usas en la vista) */
 .module-title{
-    text-align:center;
-    margin-bottom: 14px;
+  text-align:center;
+  margin-bottom: 14px;
 }
 
 /* =========================
-   TOOLBAR (SCOPE)
-   OJO: NO tocamos .toolbar global pelón.
-   Solo aplicamos cuando está dentro de .clientes-page
+   TOOLBAR (solo clientes)
 ========================= */
-.clientes-page .toolbar{
-    display:flex;
-    gap:10px;
-    margin: 14px 0;
-    padding: 0;
-    background: transparent;
-    border: 0;
-}
-
-/* Si tu vista NO tiene .clientes-page, puedes usar .clientes-toolbar en tu HTML
-   o deja este fallback (no es agresivo) */
 .clientes-toolbar{
-    display:flex;
-    gap:10px;
-    margin: 14px 0;
+  display:flex;
+  gap:10px;
+  margin: 14px 0;
+  flex-wrap: wrap;
 }
 
 /* =========================
-   BOTONES (base igual que Ventas)
+   BOTONES (igual ventas.css)
 ========================= */
-.btn,
-.toolbar button,
-.clientes-toolbar button{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    padding:10px 16px;
-    border-radius:10px;
-    border:1px solid rgba(15,23,42,.08);
-    cursor:pointer;
-    font-weight:800;
-    font-size:14px;
-    line-height:1;
-    transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
-    user-select:none;
-    background:#fff;
-    color:#0f172a;
-    box-shadow: 0 6px 14px rgba(2,6,23,.10);
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid rgba(15,23,42,.08);
+  cursor:pointer;
+  font-weight:800;
+  font-size:14px;
+  line-height:1;
+  transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+  user-select:none;
+  box-shadow: 0 6px 14px rgba(2,6,23,.10);
 }
-.btn:active,
-.toolbar button:active,
-.clientes-toolbar button:active{ transform: translateY(1px); }
+.btn:active{ transform: translateY(1px); }
+.btn:hover{ filter: brightness(.98); }
 
-.btn:hover,
-.toolbar button:hover,
-.clientes-toolbar button:hover{ filter: brightness(.98); }
+.btn.primary{
+  background:#0d6efd;
+  color:#fff;
+  border-color: rgba(13,110,253,.35);
+}
+.btn.secondary{
+  background:#e2e8f0;
+  color:#0f172a;
+  border-color:#cbd5e1;
+}
+.btn.danger{
+  background:#dc3545;
+  color:#fff;
+  border-color: rgba(220,53,69,.35);
+}
 
-/* Variantes por ID (para no tocar tu JS) */
+/* Si tu HTML trae IDs (por si un día cambias clases) */
 #btnAgregar{
-    background:#0d6efd;
-    color:#fff;
-    border-color: rgba(13,110,253,.35);
+  background:#0d6efd;
+  color:#fff;
+  border-color: rgba(13,110,253,.35);
 }
 #btnEliminar{
-    background:#dc3545;
-    color:#fff;
-    border-color: rgba(220,53,69,.35);
+  background:#dc3545;
+  color:#fff;
+  border-color: rgba(220,53,69,.35);
 }
 
 /* =========================
-   CARD CONTENEDOR (tabla)
-   Si tu tabla está sola, esto se verá igual nice.
+   CARD (contenedor tabla) — FULL WIDTH
 ========================= */
-.table-card,
-.clientes-card{
-    background:#fff;
-    border-radius:14px;
-    box-shadow:0 14px 40px rgba(2,6,23,.10);
-    border:1px solid rgba(148,163,184,.35);
-    padding:16px;
+.table-card{
+  width: 100%;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 14px 40px rgba(2,6,23,.10);
+  border:1px solid rgba(148,163,184,.35);
+  padding:16px;
+  box-sizing: border-box;
+
+  /* por si la tabla trae muchas columnas */
+  overflow-x: auto;
 }
 
-/* Si no tienes card en HTML, al menos dale aire al bloque */
-.clientes-page .tabla{
-    margin-top: 10px;
+/* Scroll bonito en la card (opcional, no molesta) */
+.table-card::-webkit-scrollbar{ height: 10px; }
+.table-card::-webkit-scrollbar-thumb{
+  background: rgba(148,163,184,.55);
+  border-radius: 999px;
 }
+.table-card::-webkit-scrollbar-track{ background: rgba(226,232,240,.6); }
 
 /* =========================
-   TABLA (estilo Ventas)
+   TABLA (tu clase real: .module-table)
 ========================= */
-.tabla{
-    width:100%;
-    border-collapse:separate;
-    border-spacing:0;
-    table-layout:fixed;
-    overflow:hidden;
-    border-radius:12px;
-    border:1px solid rgba(148,163,184,.35);
-    font-size:14px;
+.module-table{
+  width:100%;
+  min-width: 900px; /* 👈 evita que se “apachurre” feo, la card hace scroll */
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+  overflow:hidden;
+  border-radius:12px;
+  border:1px solid rgba(148,163,184,.35);
 }
 
-.tabla thead th{
-    background:#0f172a;
-    color:#fff;
-    font-weight:900;
-    font-size:12px;
-    letter-spacing:.4px;
-    padding:12px;
-    text-transform:uppercase;
-    text-align:left;
+.module-table thead th{
+  background:#0f172a;
+  color:#fff;
+  font-weight:900;
+  font-size:12px;
+  letter-spacing:.4px;
+  padding:12px;
+  text-transform:uppercase;
+  text-align:left;
 }
 
-.tabla tbody td{
-    padding:12px;
-    border-top:1px solid rgba(226,232,240,.9);
-    color:#0f172a;
-    background:#fff;
-    vertical-align:middle;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+.module-table tbody td{
+  padding:12px;
+  border-top:1px solid rgba(226,232,240,.95);
+  font-size:14px;
+  color:#0f172a;
+  background:#fff;
+  vertical-align:middle;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-.tabla tbody tr:hover td{
-    background:#f8fafc;
-    cursor:pointer;
+.module-table tbody tr:hover td{
+  background:#f8fafc;
+  cursor:pointer;
 }
 
-/* Selección */
-tr.selected td{
-    background:#eff6ff !important;
-    box-shadow: inset 0 0 0 9999px rgba(37,99,235,.06);
+/* Selección (tu JS usa .selected) */
+.module-table tbody tr.selected td{
+  background:#eff6ff !important;
+  box-shadow: inset 0 0 0 9999px rgba(37,99,235,.06);
 }
-tr.selected td:first-child{
-    border-left:4px solid #2563eb;
+.module-table tbody tr.selected td:first-child{
+  border-left:4px solid #2563eb;
+}
+
+/* “Cargando / Error” (tu HTML usa prov-empty) */
+.prov-empty{
+  text-align:center;
+  color:#64748b;
+  padding:18px !important;
+  font-weight:800;
 }
 
 /* =========================
-   MODAL (misma base de Ventas)
+   MODAL base (igual ventas.css)
+   (tu JS lo abre con display:flex)
 ========================= */
 .modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    z-index:9999;
-    display:none; /* <- para controlar con JS */
-    align-items:center;
-    justify-content:center;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
 }
 
-/* Si tu JS lo abre con display:flex, perfecto. Si no, agrega clase .open */
-.modal.open{ display:flex; }
+/* Tu JS setea display:flex (perfecto). Si algún día usas block, también lo aguanta. */
+.modal[style*="flex"]{ display:flex !important; }
+.modal[style*="block"]{ display:flex !important; }
 
 .modal-window{
-    width: 540px;
-    max-width: 95%;
-    background:#fff;
-    border-radius:14px;
-    box-shadow:0 30px 90px rgba(0,0,0,.40);
-    overflow:hidden;
-    border:1px solid rgba(148,163,184,.35);
-    padding: 0;
-    animation: zoomIn .15s ease;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 30px 90px rgba(0,0,0,.40);
+  overflow:hidden;
+  border:1px solid rgba(148,163,184,.35);
+  animation: zoomIn .15s ease;
 }
 
-/* Header opcional (si no tienes, no pasa nada) */
 .modal-header{
-    background:#0d6efd;
-    color:#fff;
-    padding:14px 18px;
-    font-size:16px;
-    font-weight:900;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+  background:#0d6efd;
+  color:#fff;
+  padding:14px 18px;
+  font-size:16px;
+  font-weight:900;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-
 .modal-body{
-    padding:16px 18px;
-    color:#0f172a;
+  padding:16px 18px;
+  color:#0f172a;
 }
-
 .modal-footer{
-    padding:12px 18px;
-    border-top:1px solid rgba(226,232,240,.95);
-    display:flex;
-    justify-content:flex-end;
-    gap:10px;
-    background:#f8fafc;
+  padding:12px 18px;
+  border-top:1px solid rgba(226,232,240,.95);
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  background:#f8fafc;
 }
 
-/* Si tu modal no tiene header/body/footer y todo vive directo en .modal-window */
-.modal-window{
-    padding:16px 18px;
+/* Botón X (tu clase) */
+.prov-close{
+  background:rgba(255,255,255,.18);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.35);
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: filter .12s ease, transform .08s ease;
+}
+.prov-close:hover{ filter: brightness(1.06); }
+.prov-close:active{ transform: translateY(1px); }
+
+/* =========================
+   FORM del modal (tu HTML usa .form-row y .form-group)
+========================= */
+.modal .form-row{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:14px;
+  margin-bottom:14px;
+  align-items:start;
+}
+.modal .form-group{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.modal .form-group label{
+  font-size:12px;
+  font-weight:800;
+  color:#334155;
+  margin-bottom:4px;
 }
 
-/* Labels */
-.modal-window label{
-    display:block;
-    margin-top:10px;
-    font-size:12px;
-    font-weight:800;
-    color:#334155;
+.modal .form-group input,
+.modal .form-group select{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid rgba(148,163,184,.65);
+  border-radius:10px;
+  outline:none;
+  background:#fff;
+  box-shadow:0 8px 20px rgba(2,6,23,.08);
+  box-sizing:border-box;
+  font-size:14px;
+}
+.modal .form-group input:focus,
+.modal .form-group select:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.14), 0 10px 22px rgba(2,6,23,.10);
 }
 
-/* Inputs con foco azul pro */
-.modal-window input,
-.modal-window textarea{
-    width:100%;
-    padding:10px 12px;
-    margin-top:4px;
-    border:1px solid rgba(148,163,184,.65);
-    border-radius:10px;
-    font-size:14px;
-    background:#fff;
-    outline:none;
-    box-sizing:border-box;
-    box-shadow:0 8px 20px rgba(2,6,23,.06);
-}
-
-.modal-window input:focus,
-.modal-window textarea:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 4px rgba(37,99,235,.14), 0 10px 22px rgba(2,6,23,.10);
-}
-
-.modal-window textarea{
-    resize:none;
-    height:70px;
-}
-
-/* checkbox */
-.modal-window label input[type="checkbox"]{
-    width:auto;
-    margin-right:8px;
-    box-shadow:none;
-}
-
-/* Botones dentro del modal (mantén tu lógica actual) */
-.modal-window button{
-    margin-top:18px;
-    padding:10px 14px;
-    border-radius:10px;
-    border:1px solid rgba(15,23,42,.08);
-    cursor:pointer;
-    font-size:14px;
-    font-weight:900;
-    box-shadow: 0 6px 14px rgba(2,6,23,.10);
-    transition: transform .08s ease, filter .12s ease;
-}
-
-.modal-window button:active{ transform: translateY(1px); }
-.modal-window button:hover{ filter: brightness(.98); }
-
-.modal-window button[type="submit"],
-.modal-window button:not([type]){
-    background:#0d6efd;
-    color:#fff;
-    border-color: rgba(13,110,253,.35);
-}
-
-.modal-window button[type="button"]{
-    background:#dc3545;
-    color:#fff;
-    border-color: rgba(220,53,69,.35);
-    margin-left:10px;
-}
-
-/* animación */
+/* Animación */
 @keyframes zoomIn{
-    from{ transform: scale(.98); opacity: 0; }
-    to  { transform: scale(1); opacity: 1; }
+  from{ transform: scale(.98); opacity: 0; }
+  to  { transform: scale(1); opacity: 1; }
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 @media (max-width: 720px){
-    .clientes-page .toolbar,
-    .clientes-toolbar{
-        flex-direction:column;
-        align-items:stretch;
-    }
-    .toolbar button,
-    .clientes-toolbar button{ width:100%; }
-}
+  .clientes-toolbar{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .btn{ width:100%; }
 
+  .modal .form-row{
+    grid-template-columns: 1fr;
+  }
 
-/* =========================
-   FIX: Respiro para la toolbar en Clientes
-========================= */
-.toolbar{
-  margin: 14px 18px 12px;   /* arriba / laterales / abajo */
-  border-radius: 12px;      /* bonus: se ve más premium */
-  box-shadow: 0 10px 24px rgba(2,6,23,.08); /* bonus suave */
-}
-
-/* Opcional: separa un poquito la tabla de la toolbar */
-.toolbar + .tabla{
-  margin-top: 10px;
+  /* en móvil, deja que la tabla pueda scrollear sin hacer zoom raro */
+  .module-table{ min-width: 760px; }
 }

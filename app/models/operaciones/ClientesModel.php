@@ -8,9 +8,10 @@ class ClientesModel {
         $this->db = Database::connect();
     }
 
-    /**
-     * Clientes activos
-     */
+    /* =========================
+       CONSULTAS BÁSICAS
+    ========================= */
+
     public function getAll() {
         $stmt = $this->db->prepare("
             SELECT *
@@ -22,17 +23,11 @@ class ClientesModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Alias más claro (para otras pantallas)
-     */
     public function getActivos() {
         return $this->getAll();
     }
 
-    /**
-     * Obtener cliente por id
-     */
-    public function getById($id) {
+    public function getById(int $id) {
         $stmt = $this->db->prepare("
             SELECT *
             FROM clientes
@@ -40,93 +35,63 @@ class ClientesModel {
             LIMIT 1
         ");
         $stmt->execute([':id' => $id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
-    /**
-     * Cliente "Público en General"
-     * (lo busca por nombre o por código típico CLI0003)
-     */
-    public function getPublicoGeneral() {
+    /* =========================
+       PÚBLICO EN GENERAL (POS)
+       👉 ESTE MÉTODO ES CLAVE
+    ========================= */
 
+    public function getPublicoGeneral() {
         $stmt = $this->db->prepare("
             SELECT *
             FROM clientes
             WHERE
-                (nombre = 'Publico en General'
+                codigo = 'CLI0003'
+                OR nombre = 'Publico en General'
                 OR nombre = 'Público en General'
-                OR codigo = 'CLI0003')
             LIMIT 1
         ");
         $stmt->execute();
-
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row ?: null;
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
-    /**
-     * Código automático CLI0001
-     */
-    private function generarCodigo() {
+    /* =========================
+       CREACIÓN / EDICIÓN
+    ========================= */
 
-        $stmt = $this->db->query("
-            SELECT MAX(id) AS ultimo_id
-            FROM clientes
-        ");
-
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $next = ((int)($row['ultimo_id'] ?? 0)) + 1;
-
+    private function generarCodigo(): string {
+        $stmt = $this->db->query("SELECT MAX(id) FROM clientes");
+        $next = ((int)$stmt->fetchColumn()) + 1;
         return 'CLI' . str_pad((string)$next, 4, '0', STR_PAD_LEFT);
     }
 
-    /**
-     * Crear cliente (pantalla normal)
-     */
-    public function create($data) {
-
-        $codigo = $this->generarCodigo();
+    public function create(array $data): bool {
 
         $stmt = $this->db->prepare("
             INSERT INTO clientes (
-                codigo,
-                nombre,
-                telefono,
-                email,
-                direccion,
-                permite_credito,
-                limite_credito,
-                dias_credito,
-                activo
+                codigo, nombre, telefono, email, direccion,
+                permite_credito, limite_credito, dias_credito, activo
             ) VALUES (
-                :codigo,
-                :nombre,
-                :telefono,
-                :email,
-                :direccion,
-                :permite_credito,
-                :limite_credito,
-                :dias_credito,
-                1
+                :codigo, :nombre, :telefono, :email, :direccion,
+                :permite_credito, :limite_credito, :dias_credito, 1
             )
         ");
 
         return $stmt->execute([
-            ':codigo'          => $codigo,
+            ':codigo'          => $this->generarCodigo(),
             ':nombre'          => $data['nombre'],
-            ':telefono'        => $data['telefono'],
-            ':email'           => $data['email'],
-            ':direccion'       => $data['direccion'],
-            ':permite_credito' => $data['permite_credito'],
-            ':limite_credito'  => $data['limite_credito'],
-            ':dias_credito'    => $data['dias_credito']
+            ':telefono'        => $data['telefono'] ?? null,
+            ':email'           => $data['email'] ?? null,
+            ':direccion'       => $data['direccion'] ?? null,
+            ':permite_credito' => (int)($data['permite_credito'] ?? 0),
+            ':limite_credito'  => (float)($data['limite_credito'] ?? 0),
+            ':dias_credito'    => (int)($data['dias_credito'] ?? 0),
         ]);
     }
 
-    /**
-     * Actualizar cliente
-     */
-    public function update($id, $data) {
+    public function update(int $id, array $data): bool {
 
         $stmt = $this->db->prepare("
             UPDATE clientes SET
@@ -142,122 +107,108 @@ class ClientesModel {
 
         return $stmt->execute([
             ':nombre'          => $data['nombre'],
-            ':telefono'        => $data['telefono'],
-            ':email'           => $data['email'],
-            ':direccion'       => $data['direccion'],
-            ':permite_credito' => $data['permite_credito'],
-            ':limite_credito'  => $data['limite_credito'],
-            ':dias_credito'    => $data['dias_credito'],
+            ':telefono'        => $data['telefono'] ?? null,
+            ':email'           => $data['email'] ?? null,
+            ':direccion'       => $data['direccion'] ?? null,
+            ':permite_credito' => (int)($data['permite_credito'] ?? 0),
+            ':limite_credito'  => (float)($data['limite_credito'] ?? 0),
+            ':dias_credito'    => (int)($data['dias_credito'] ?? 0),
             ':id'              => $id
         ]);
     }
 
-    /**
-     * Soft delete
-     */
-    public function toggle($id, $estado) {
-
+    public function toggle(int $id, int $estado): bool {
         $stmt = $this->db->prepare("
             UPDATE clientes
             SET activo = :estado
             WHERE id = :id
         ");
-
         return $stmt->execute([
             ':estado' => $estado,
             ':id'     => $id
         ]);
     }
 
-    /**
-     * =======================================================
-     * POS: Crear cliente rápido y REGRESAR el cliente insertado
-     * (para inyectarlo en el modal sin recargar / sin redirigir)
-     * =======================================================
-     */
-    public function createRapidoReturn($data) {
+    /* =========================
+       BLOQUEOS / VALIDACIONES
+    ========================= */
 
-        $nombre = trim((string)($data['nombre'] ?? ''));
+    public function getSaldoPendienteCliente(int $clienteId): float {
+        $stmt = $this->db->prepare("
+            SELECT COALESCE(SUM(c.saldo), 0)
+            FROM creditos c
+            WHERE c.cliente_id = :id
+              AND c.estado <> 'CANCELADO'
+        ");
+        $stmt->execute([':id' => $clienteId]);
+        return (float)$stmt->fetchColumn();
+    }
+
+    public function validarEliminacion(int $clienteId): void {
+
+        $cli = $this->getById($clienteId);
+        if (!$cli) {
+            throw new Exception('Cliente no existe');
+        }
+
+        if (
+            $cli['codigo'] === 'CLI0003'
+            || $cli['nombre'] === 'Publico en General'
+            || $cli['nombre'] === 'Público en General'
+        ) {
+            throw new Exception('No puedes eliminar al cliente Público en General.');
+        }
+
+        $saldo = $this->getSaldoPendienteCliente($clienteId);
+        if ($saldo > 0) {
+            throw new Exception(
+                'No puedes eliminar: el cliente tiene crédito pendiente ($' .
+                number_format($saldo, 2) . ').'
+            );
+        }
+    }
+
+    /* =========================
+       POS: CREACIÓN RÁPIDA
+    ========================= */
+
+    public function createRapidoReturn(array $data): array {
+
+        $nombre = trim($data['nombre'] ?? '');
         if ($nombre === '') {
             throw new Exception('El nombre es obligatorio');
         }
 
-        $telefono  = isset($data['telefono']) ? trim((string)$data['telefono']) : null;
-        $email     = isset($data['email']) ? trim((string)$data['email']) : null;
-        $direccion = isset($data['direccion']) ? trim((string)$data['direccion']) : null;
-
-        $permite = (int)($data['permite_credito'] ?? 0) === 1 ? 1 : 0;
-        $limite  = (float)($data['limite_credito'] ?? 0);
-        $dias    = (int)($data['dias_credito'] ?? 0);
-
-        // por si viene un codigo (no lo usas ahora, pero lo soportamos)
-        $codigoIn = isset($data['codigo']) ? trim((string)$data['codigo']) : '';
-
-        // normaliza
-        if ($telefono === '') $telefono = null;
-        if ($email === '') $email = null;
-        if ($direccion === '') $direccion = null;
-
-        // código: si no mandan, genera
-        $codigo = $codigoIn !== '' ? $codigoIn : $this->generarCodigo();
-
-        // evita duplicado de código si mandaron uno manual
-        if ($codigoIn !== '') {
-            $stmt = $this->db->prepare("SELECT COUNT(*) FROM clientes WHERE codigo = :c LIMIT 1");
-            $stmt->execute([':c' => $codigo]);
-            if ((int)$stmt->fetchColumn() > 0) {
-                throw new Exception('Ese código ya existe');
-            }
+        $codigo = trim($data['codigo'] ?? '');
+        if ($codigo === '') {
+            $codigo = $this->generarCodigo();
         }
 
         $stmt = $this->db->prepare("
             INSERT INTO clientes (
-                codigo,
-                nombre,
-                telefono,
-                email,
-                direccion,
-                permite_credito,
-                limite_credito,
-                dias_credito,
-                activo
+                codigo, nombre, telefono, email, direccion,
+                permite_credito, limite_credito, dias_credito, activo
             ) VALUES (
-                :codigo,
-                :nombre,
-                :telefono,
-                :email,
-                :direccion,
-                :permite_credito,
-                :limite_credito,
-                :dias_credito,
-                1
+                :codigo, :nombre, :telefono, :email, :direccion,
+                :permite_credito, :limite_credito, :dias_credito, 1
             )
         ");
 
         $stmt->execute([
             ':codigo'          => $codigo,
             ':nombre'          => $nombre,
-            ':telefono'        => $telefono,
-            ':email'           => $email,
-            ':direccion'       => $direccion,
-            ':permite_credito' => $permite,
-            ':limite_credito'  => $limite,
-            ':dias_credito'    => $dias
+            ':telefono'        => $data['telefono'] ?? null,
+            ':email'           => $data['email'] ?? null,
+            ':direccion'       => $data['direccion'] ?? null,
+            ':permite_credito' => (int)($data['permite_credito'] ?? 0),
+            ':limite_credito'  => (float)($data['limite_credito'] ?? 0),
+            ':dias_credito'    => (int)($data['dias_credito'] ?? 0),
         ]);
 
-        $id = (int)$this->db->lastInsertId();
-
-        // regresamos un payload perfecto para tu JS (res.cliente)
         return [
-            'id'             => $id,
-            'codigo'         => $codigo,
-            'nombre'         => $nombre,
-            'telefono'       => $telefono,
-            'email'          => $email,
-            'direccion'      => $direccion,
-            'permite_credito'=> $permite,
-            'limite_credito' => $limite,
-            'dias_credito'   => $dias
+            'id'     => (int)$this->db->lastInsertId(),
+            'codigo' => $codigo,
+            'nombre' => $nombre
         ];
     }
 }

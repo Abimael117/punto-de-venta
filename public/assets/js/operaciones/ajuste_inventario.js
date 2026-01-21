@@ -317,9 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnCerrar)  btnCerrar.onclick  = closeModal;
   if (btnCerrar2) btnCerrar2.onclick = closeModal;
 
-  modal?.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
 
   if (btnGuardar)  btnGuardar.onclick  = guardar;
   if (btnCancelar) btnCancelar.onclick = () => location.reload();
