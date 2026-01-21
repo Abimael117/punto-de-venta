@@ -166,10 +166,24 @@ class ArticulosController extends Controller {
             return;
         }
 
-        $codigo = trim($_GET['codigo']);
-        $articulo = $this->model->buscarPorCodigo($codigo);
+        $q = trim((string)$_GET['codigo']);
+        if ($q === '') {
+            echo json_encode(null);
+            return;
+        }
 
+        // ✅ Si es PURO NÚMERO => buscar por código (scanner)
+        // ✅ Si trae LETRAS (o no es puro número) => buscar por nombre/descripcion
+        if (ctype_digit($q)) {
+            $articulo = $this->model->buscarPorCodigo($q);
+            echo json_encode($articulo ?: null);
+            return;
+        }
+
+        // modo búsqueda por nombre
+        $articulo = $this->model->buscarPorNombre($q);
         echo json_encode($articulo ?: null);
+        return;
     }
 
     public function eliminar() {

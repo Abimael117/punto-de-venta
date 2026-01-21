@@ -73,6 +73,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let esperaFilaSelId = null;
 
+  // ===== ✅ Modal Cantidad =====
+  const modalCantidad       = document.getElementById('modalCantidad');
+  const btnCerrarCantidad   = document.getElementById('btnCerrarCantidad');
+  const btnCancelarCantidad = document.getElementById('btnCancelarCantidad');
+  const btnGuardarCantidad  = document.getElementById('btnGuardarCantidad');
+  const qtyArticuloTxt      = document.getElementById('qtyArticuloTxt');
+  const qtyStockTxt         = document.getElementById('qtyStockTxt');
+  const qtyCantidadInput    = document.getElementById('qtyCantidad');
+  const qtyError            = document.getElementById('qtyError');
+  const btnQtyMenos         = document.getElementById('btnQtyMenos');
+  const btnQtyMas           = document.getElementById('btnQtyMas');
+  const btnQtyMenos10       = document.getElementById('btnQtyMenos10');
+  const btnQtyMas10         = document.getElementById('btnQtyMas10');
+
+  let editQtyIndex = -1;
+
   // ===== Botones toolbar =====
   const btnCancelar  = document.getElementById('btnCancelar');
   const btnCobrar    = document.getElementById('btnCobrar');
@@ -85,8 +101,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let scanTimeout = null;
   let selectedIndex = -1;
 
+  // ✅ anti-duplicados de submit (scanner + Enter)
+  let lastSubmitValue = '';
+  let lastSubmitAt = 0;
+
   // Crédito cache
-  // ✅ ahora incluye proximoVenc y diasRestantes (para mostrar días restantes reales)
   let creditoInfoCache = {
     clienteId: 0,
     adeudo: 0,
@@ -103,6 +122,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================
   const money = (n) => (Number(n || 0)).toFixed(2);
 
+  const fmtQty = (n) => {
+    const x = Number(n || 0);
+    if (!Number.isFinite(x)) return '0';
+    // muestra hasta 3 decimales sin ceros al final (1 -> "1", 0.35 -> "0.35")
+    let s = x.toFixed(3);
+    s = s.replace(/\.?0+$/,'');
+    return s;
+  };
+
   const numVal = (el) => {
     const v = (el?.value ?? '');
     const n = parseFloat(String(v).replace(',', '.'));
@@ -115,6 +143,11 @@ document.addEventListener('DOMContentLoaded', () => {
     return Number.isFinite(n) ? n : 0;
   };
 
+  const parseQty = (v) => {
+    const n = parseFloat(String(v ?? '').trim().replace(',', '.'));
+    return Number.isFinite(n) ? n : NaN;
+  };
+
   function calcTotal() {
     let total = 0;
     detalle.forEach(i => total += (i.cantidad * i.precio));
@@ -124,6 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function clearSelected() {
     selectedIndex = -1;
     tbody.querySelectorAll('tr').forEach(tr => tr.classList.remove('selected'));
+  }
+
+  function setSelected(idx) {
+    clearSelected();
+    if (idx < 0 || idx >= detalle.length) return;
+    selectedIndex = idx;
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const tr = rows[idx];
+    if (tr) tr.classList.add('selected');
   }
 
   function pad2(n) { return String(n).padStart(2, '0'); }
@@ -146,45 +188,174 @@ document.addEventListener('DOMContentLoaded', () => {
     return !!el && el.style.display !== 'none' && el.style.display !== '';
   }
 
+  // ✅ Detectores para decidir auto-submit (scanner) vs manual (tecleo por nombre)
+  function isDigitsOnly(str) {
+    const s = String(str || '').trim();
+    return s.length > 0 && /^[0-9]+$/.test(s);
+  }
+
+  function hasLetter(str) {
+    const s = String(str || '');
+    return /[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/.test(s);
+  }
+
+  function submitCodigoDesdeInput(valor, reason = 'unknown') {
+    const codigo = String(valor || '').trim();
+    if (!codigo) return;
+
+    const now = Date.now();
+    // evita doble submit si scanner manda Enter y además cae el timeout
+    if (codigo === lastSubmitValue && (now - lastSubmitAt) < 350) {
+      return;
+    }
+    lastSubmitValue = codigo;
+    lastSubmitAt = now;
+
+    if (scanTimeout) { clearTimeout(scanTimeout); scanTimeout = null; }
+
+    input.value = '';
+    buscarArticulo(codigo);
+  }
+
   // =========================================================
   // ✅ CLICK EN CUALQUIER PARTE = ENFOCAR INPUT ESCÁNER
-  // (excepto botones/inputs/links y cuando hay modales abiertos)
   // =========================================================
   function isCobroOpen() {
-    // En cobro usas class "hidden"
     return !!modalCobro && !modalCobro.classList.contains('hidden');
   }
 
   function isAnyModalOpen() {
-    // Clientes/CrearCliente/Espera usan display:flex y Cobro usa .hidden
-    return isOpen(modalClientes) || isOpen(modalCrearCliente) || isOpen(modalEspera) || isCobroOpen();
+    return isOpen(modalClientes) || isOpen(modalCrearCliente) || isOpen(modalEspera) || isCobroOpen() || isOpen(modalCantidad);
   }
 
   function shouldIgnoreClickTarget(target) {
     if (!target) return true;
-
-    // Si el click fue en input/textarea/select o editable, no robamos foco
     if (target.closest('input, textarea, select, [contenteditable="true"]')) return true;
-
-    // Si el click fue en un botón/link o elemento clickeable, lo respetamos
     if (target.closest('button, a, .btn, [role="button"]')) return true;
-
-    // Si algún día quieres excluir algo específico: data-no-refocus
     if (target.closest('[data-no-refocus="1"]')) return true;
-
     return false;
   }
 
   document.addEventListener('click', (e) => {
     if (isAnyModalOpen()) return;
     const t = e.target;
-
     if (shouldIgnoreClickTarget(t)) return;
 
-    // Enfoca y selecciona para que el siguiente escaneo reemplace lo que haya
     input.focus();
     input.select();
   });
+
+  // =========================
+  // ✅ MODAL CANTIDAD
+  // =========================
+  function showQtyError(msg) {
+    if (!qtyError) return;
+    qtyError.innerText = msg || '';
+    qtyError.style.display = msg ? 'block' : 'none';
+  }
+
+  function abrirModalCantidad(idx) {
+    if (!modalCantidad) return;
+    if (idx < 0 || idx >= detalle.length) return;
+
+    editQtyIndex = idx;
+    const it = detalle[idx];
+
+    if (qtyArticuloTxt) qtyArticuloTxt.innerText = `${it.codigo} — ${it.descripcion}`;
+    if (qtyStockTxt) qtyStockTxt.innerText = fmtQty(it.stock);
+
+    showQtyError('');
+
+    if (qtyCantidadInput) {
+      qtyCantidadInput.value = fmtQty(it.cantidad);
+      setTimeout(() => {
+        qtyCantidadInput.focus();
+        qtyCantidadInput.select();
+      }, 30);
+    }
+
+    modalCantidad.style.display = 'flex';
+  }
+
+  function cerrarModalCantidad() {
+    if (!modalCantidad) return;
+    modalCantidad.style.display = 'none';
+    showQtyError('');
+    editQtyIndex = -1;
+    input.focus();
+  }
+
+  function ajustarCantidad(delta) {
+    if (editQtyIndex < 0 || editQtyIndex >= detalle.length) return;
+    const it = detalle[editQtyIndex];
+    const cur = parseQty(qtyCantidadInput?.value);
+    const base = Number.isFinite(cur) ? cur : Number(it.cantidad || 0);
+    let next = base + delta;
+
+    // redondeo suave para evitar 0.30000000004
+    next = Math.round(next * 1000) / 1000;
+
+    if (next < 0) next = 0;
+
+    if (qtyCantidadInput) {
+      qtyCantidadInput.value = fmtQty(next);
+      qtyCantidadInput.focus();
+      qtyCantidadInput.select();
+    }
+  }
+
+  function guardarCantidad() {
+    if (editQtyIndex < 0 || editQtyIndex >= detalle.length) return;
+    const it = detalle[editQtyIndex];
+
+    const v = parseQty(qtyCantidadInput?.value);
+    if (!Number.isFinite(v)) {
+      showQtyError('Cantidad inválida.');
+      qtyCantidadInput && qtyCantidadInput.focus();
+      return;
+    }
+
+    if (v <= 0) {
+      showQtyError('La cantidad debe ser mayor a 0.');
+      qtyCantidadInput && qtyCantidadInput.focus();
+      return;
+    }
+
+    const stock = Number(it.stock || 0);
+    if (v > stock) {
+      showQtyError(`Stock insuficiente. Máximo: ${fmtQty(stock)}`);
+      qtyCantidadInput && qtyCantidadInput.focus();
+      return;
+    }
+
+    it.cantidad = v;
+
+    render();
+    setSelected(editQtyIndex);
+    cerrarModalCantidad();
+  }
+
+  if (btnCerrarCantidad) btnCerrarCantidad.onclick = cerrarModalCantidad;
+  if (btnCancelarCantidad) btnCancelarCantidad.onclick = cerrarModalCantidad;
+  if (btnGuardarCantidad) btnGuardarCantidad.onclick = guardarCantidad;
+
+
+  if (btnQtyMenos) btnQtyMenos.onclick = () => ajustarCantidad(-1);
+  if (btnQtyMas) btnQtyMas.onclick = () => ajustarCantidad(1);
+  if (btnQtyMenos10) btnQtyMenos10.onclick = () => ajustarCantidad(-0.10);
+  if (btnQtyMas10) btnQtyMas10.onclick = () => ajustarCantidad(0.10);
+
+  if (qtyCantidadInput) {
+    qtyCantidadInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        guardarCantidad();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        cerrarModalCantidad();
+      }
+    });
+  }
 
   // =========================
   // MODAL CLIENTES
@@ -237,12 +408,10 @@ document.addEventListener('DOMContentLoaded', () => {
     clienteNombre.innerText = clienteFilaSel.dataset.text || '';
     clienteCodigo.innerText = clienteFilaSel.dataset.codigo || '';
 
-    // info para crédito
     clienteId.dataset.limite  = clienteFilaSel.dataset.limite  || '0';
     clienteId.dataset.dias    = clienteFilaSel.dataset.dias    || '0';
     clienteId.dataset.permite = clienteFilaSel.dataset.permite || '0';
 
-    // si el panel crédito está abierto, recarga info
     if (creditoPanelOpen) {
       creditoInfoCache = {
         clienteId: 0,
@@ -426,15 +595,40 @@ document.addEventListener('DOMContentLoaded', () => {
   // ESCÁNER / INPUT
   // =========================
   input.addEventListener('input', () => {
-    if (scanTimeout) clearTimeout(scanTimeout);
+    if (scanTimeout) { clearTimeout(scanTimeout); scanTimeout = null; }
+
+    const raw = input.value;
+    const v = String(raw || '').trim();
+    if (!v) return;
+
+    const modoScanner = isDigitsOnly(v) && !hasLetter(v);
+
+    if (!modoScanner) {
+      return; // modo manual: espera Enter
+    }
 
     scanTimeout = setTimeout(() => {
-      const codigo = input.value.trim();
+      const codigo = String(input.value || '').trim();
       if (!codigo) return;
-
-      input.value = '';
-      buscarArticulo(codigo);
+      if (!isDigitsOnly(codigo) || hasLetter(codigo)) return;
+      submitCodigoDesdeInput(codigo, 'scanner-timeout');
     }, 250);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+
+    const v = String(input.value || '').trim();
+    if (!v) return;
+
+    if (!isDigitsOnly(v) || hasLetter(v)) {
+      e.preventDefault();
+      submitCodigoDesdeInput(v, 'manual-enter');
+      return;
+    }
+
+    e.preventDefault();
+    submitCodigoDesdeInput(v, 'digits-enter');
   });
 
   // =========================
@@ -519,22 +713,30 @@ document.addEventListener('DOMContentLoaded', () => {
       tr.innerHTML = `
         <td>${item.codigo}</td>
         <td>${item.descripcion}</td>
-        <td style="text-align:right">${item.stock}</td>
-        <td style="text-align:right">${item.cantidad}</td>
+        <td style="text-align:right">${fmtQty(item.stock)}</td>
+        <td style="text-align:right">${fmtQty(item.cantidad)}</td>
         <td style="text-align:right">${money(item.precio)}</td>
         <td style="text-align:right">${money(importe)}</td>
       `;
 
       tr.addEventListener('click', () => {
-        clearSelected();
-        selectedIndex = idx;
-        tr.classList.add('selected');
+        setSelected(idx);
+      });
+
+      tr.addEventListener('dblclick', () => {
+        setSelected(idx);
+        abrirModalCantidad(idx);
       });
 
       tbody.appendChild(tr);
     });
 
     totalSpan.innerText = money(total);
+
+    // si había selección y sigue existiendo, re-aplica
+    if (selectedIndex >= 0 && selectedIndex < detalle.length) {
+      setSelected(selectedIndex);
+    }
   }
 
   // =========================================================
@@ -782,14 +984,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const pagado = getPagoTotal();
     const cambio = Number((pagado - total).toFixed(2));
 
-    // ✅ CAMBIO: permite NEGATIVO
     if (cambioCobroSpan) cambioCobroSpan.innerText = money(cambio);
 
-    // ✅ Total a crédito = restante (aunque el panel esté oculto)
     const restante = getRestanteCredito();
     if (creditoTotal) creditoTotal.value = money(restante);
 
-    // si el panel crédito está abierto, refresca warnings con el restante
     if (creditoPanelOpen) actualizarCreditoUI();
   }
 
@@ -822,7 +1021,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const limite  = Number(clienteId?.dataset?.limite || 0);
     const permite = Number(clienteId?.dataset?.permite || 0);
 
-    // ✅ DIAS RESTANTES: si el backend manda diasRestantes, se usa (si no, cae a configurado)
     const cid = Number(clienteId?.value || 0);
     const cacheOk = (creditoInfoCache.clienteId === cid);
 
@@ -836,7 +1034,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (creditoLimite) creditoLimite.value = money(limite);
 
-    // ✅ VENCE: si backend manda proximoVenc, se usa; si no, se calcula con configurado
     if (creditoVence) {
       if (cacheOk && creditoInfoCache.proximoVenc) {
         creditoVence.value = creditoInfoCache.proximoVenc;
@@ -852,7 +1049,6 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // si cache no es del cliente actual, la UI se actualiza después de cargar
     const adeudo = cacheOk ? Number(creditoInfoCache.adeudo || 0) : 0;
     const tieneVencidos = cacheOk ? !!creditoInfoCache.tieneVencidos : false;
 
@@ -862,7 +1058,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!creditoWarning) return;
 
-    // solo advertimos si realmente habrá crédito
     if (totalCredito <= 0) {
       creditoWarning.style.display = 'none';
       return;
@@ -892,7 +1087,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     showCreditoPanel();
 
-    // carga info si no la tenemos del cliente actual
     if (creditoInfoCache.clienteId !== cid) {
       await cargarCreditoInfo(cid);
     }
@@ -903,7 +1097,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function cerrarCreditoPanel() {
     hideCreditoPanel();
-    // OJO: aunque cierres panel, el cambio/creditoTotal sigue actualizándose siempre
   }
 
   function abrirModalCobro() {
@@ -916,7 +1109,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (modalCobro) modalCobro.classList.remove('hidden');
 
-    // defaults
     if (efectivoInput) efectivoInput.value = totalSpan.innerText;
     if (tarjetaInput) tarjetaInput.value = 0;
     if (transferenciaInput) transferenciaInput.value = 0;
@@ -947,7 +1139,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // ✅ Cambio SIEMPRE (panel abierto o cerrado)
   [efectivoInput, tarjetaInput, transferenciaInput].forEach(i => {
     if (!i) return;
     i.addEventListener('input', () => {
@@ -965,7 +1156,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const pagado = getPagoTotal();
       const restanteCredito = getRestanteCredito();
 
-      // si habrá crédito, necesitamos cliente
       if (restanteCredito > 0) {
         const cid = Number(clienteId?.value || 0);
         if (!cid) {
@@ -974,31 +1164,23 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        // si no está el cache del cliente, cargarlo antes de validar
         if (creditoInfoCache.clienteId !== cid) {
           await cargarCreditoInfo(cid);
         }
 
-        // fuerza recalcular warnings (con restante actual)
         actualizarCreditoUI();
 
-        // si warning está visible, bloquea
         if (creditoWarning && creditoWarning.style.display !== 'none' && creditoWarning.innerText.trim() !== '') {
           alert(creditoWarning.innerText.replace('⚠', '').trim());
           return;
         }
       } else {
-        // contado puro: debe cubrir el total
         if (pagado < total) {
           alert('Pago insuficiente');
           return;
         }
       }
 
-      // tipo pago (para backend)
-      // - CONTADO: restante 0
-      // - MIXTO: restante > 0 y pagado > 0
-      // - CREDITO: restante > 0 y pagado == 0
       let tipo_pago = 'CONTADO';
       if (restanteCredito > 0 && pagado > 0) tipo_pago = 'MIXTO';
       else if (restanteCredito > 0 && pagado === 0) tipo_pago = 'CREDITO';
@@ -1014,7 +1196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tarjeta: numVal(tarjetaInput),
             transferencia: numVal(transferenciaInput),
             referencia: referenciaInput?.value || null,
-            tipo_pago: tipo_pago // CONTADO / MIXTO / CREDITO
+            tipo_pago: tipo_pago
           },
           detalle
         })
@@ -1036,6 +1218,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================
   document.addEventListener('keydown', (e) => {
 
+    // ✅ Si está abierto el modal de cantidad, Escape/Enter se manejan aquí también
+    if (isOpen(modalCantidad)) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        cerrarModalCantidad();
+        return;
+      }
+      if (e.key === 'Enter') {
+        // si el focus no está en input, igual guardamos
+        if (document.activeElement !== qtyCantidadInput) {
+          e.preventDefault();
+          guardarCantidad();
+          return;
+        }
+      }
+      return;
+    }
+
     if (isOpen(modalCrearCliente)) {
       if (e.key === 'Escape') {
         e.preventDefault();
@@ -1050,7 +1250,23 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    // ✅ F4 = editar cantidad del seleccionado
+    if (e.key === 'F4') {
+      e.preventDefault();
+      if (selectedIndex < 0 || selectedIndex >= detalle.length) {
+        alert('Selecciona un artículo para editar cantidad');
+        return;
+      }
+      abrirModalCantidad(selectedIndex);
+      return;
+    }
+
+    // ✅ Escape general: solo si NO hay otros modales abiertos
     if (e.key === 'Escape') {
+      if (isAnyModalOpen()) {
+        // si hay un modal abierto diferente, no recargamos
+        return;
+      }
       e.preventDefault();
       location.reload();
       return;
@@ -1065,17 +1281,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'F3') {
       e.preventDefault();
 
-      // Si el modal de cobro está abierto → ACEPTAR
       if (modalCobro && !modalCobro.classList.contains('hidden')) {
         confirmarCobroBtn && confirmarCobroBtn.click();
         return;
       }
 
-      // Si NO está abierto → abrir cobro
       abrirModalCobro();
       return;
     }
-
 
     if (e.key === 'F6') {
       e.preventDefault();

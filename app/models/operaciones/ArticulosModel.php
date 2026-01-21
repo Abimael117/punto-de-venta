@@ -85,6 +85,72 @@ class ArticulosModel {
         return $row ?: null;
     }
 
+    // ✅ NUEVO: buscar por nombre (descripcion)
+    // Regla: devuelve 1 solo artículo (el mejor match)
+    public function buscarPorNombre(string $texto): ?array {
+
+        $t = trim($texto);
+        if ($t === '') return null;
+
+        // Normaliza espacios
+        $t = preg_replace('/\s+/', ' ', $t);
+
+        // Para LIKE
+        $likeContains = '%' . $t . '%';
+        $likeStarts   = $t . '%';
+
+        $stmt = $this->db->prepare("
+            SELECT
+                a.id,
+                a.codigo,
+                a.nombre AS descripcion,
+                a.precio_compra,
+                a.precio_venta,
+                a.categoria_id,
+                a.unidad_id,
+                (
+                    SELECT COALESCE(SUM(
+                        CASE
+                            WHEN im.tipo = 'ENTRADA' THEN im.cantidad
+                            WHEN im.tipo = 'SALIDA'  THEN -im.cantidad
+                            ELSE 0
+                        END
+                    ), 0)
+                    FROM inventario_movimientos im
+                    WHERE im.articulo_id = a.id
+                ) AS stock
+            FROM articulos a
+            WHERE a.activo = 1
+              AND a.nombre LIKE :contains
+            ORDER BY
+              -- primero los que empiezan con el texto
+              CASE WHEN a.nombre LIKE :starts THEN 0 ELSE 1 END,
+              -- luego prioriza que sí tengan stock (para ventas)
+              CASE WHEN (
+                SELECT COALESCE(SUM(
+                    CASE
+                        WHEN im.tipo = 'ENTRADA' THEN im.cantidad
+                        WHEN im.tipo = 'SALIDA'  THEN -im.cantidad
+                        ELSE 0
+                    END
+                ), 0)
+                FROM inventario_movimientos im
+                WHERE im.articulo_id = a.id
+              ) > 0 THEN 0 ELSE 1 END,
+              -- por último orden alfabético
+              a.nombre ASC
+            LIMIT 1
+        ");
+
+        $stmt->execute([
+            ':contains' => $likeContains,
+            ':starts'   => $likeStarts
+        ]);
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ?: null;
+    }
+
     public function create(
         $codigo,
         $nombre,

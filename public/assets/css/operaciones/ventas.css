@@ -455,6 +455,109 @@
 }
 .hidden{ display:none !important; }
 
+/* =========================
+   ✅ MODAL CANTIDAD
+========================= */
+.qty-window{
+  width: 560px;
+  max-width: 96%;
+}
+
+.qty-kpis{
+  display:grid;
+  grid-template-columns: 1.6fr .8fr;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.qty-kpi{
+  background:#f8fafc;
+  border:1px solid rgba(148,163,184,.55);
+  border-radius:12px;
+  padding:10px 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
+}
+.qty-kpi.right{ text-align:right; }
+.qty-kpi-label{
+  font-size:12px;
+  font-weight:800;
+  color:#334155;
+  margin-bottom:2px;
+}
+.qty-kpi-value{
+  font-size:14px;
+  font-weight:900;
+  color:#0f172a;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.qty-editor{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:12px;
+}
+
+.qty-input-wrap{
+  background:#fff;
+  border:1px solid rgba(148,163,184,.55);
+  border-radius:12px;
+  padding:12px;
+  box-shadow:0 10px 24px rgba(2,6,23,.08);
+}
+
+.qty-label{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  color:#334155;
+  margin-bottom:6px;
+}
+
+.qty-input{
+  width:100%;
+  padding:14px 14px;
+  font-size:22px;
+  border:1px solid rgba(148,163,184,.65);
+  border-radius:12px;
+  outline:none;
+  box-sizing:border-box;
+  font-variant-numeric: tabular-nums;
+}
+.qty-input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.14);
+}
+
+.qty-hint{
+  margin-top:8px;
+  font-size:12px;
+  color:#64748b;
+  font-weight:700;
+}
+
+.qty-stepper{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:10px;
+}
+
+.qty-step{
+  padding:12px 10px;
+  border-radius:12px;
+  font-weight:900;
+}
+
+.qty-error{
+  padding:10px 12px;
+  border-radius:12px;
+  background:#fff1f2;
+  border:1px solid rgba(244,63,94,.25);
+  color:#9f1239;
+  font-weight:800;
+}
+
 /* ===== Ajustes responsive ===== */
 @media (max-width: 900px){
     .ventas-toprow{
@@ -478,4 +581,5 @@
   .cobro-row{ grid-template-columns: 1fr; }
   .credito-grid{ grid-template-columns: 1fr; }
   .ref-row input{ grid-column: auto; }
+  .qty-stepper{ grid-template-columns: repeat(2, 1fr); }
 }

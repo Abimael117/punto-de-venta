@@ -71,6 +71,54 @@
     </div>
 </div>
 
+<!-- ✅ MODAL: EDITAR CANTIDAD -->
+<div class="modal" id="modalCantidad" style="display:none;">
+  <div class="modal-window qty-window">
+    <div class="modal-header qty-header">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:18px;">✏️</span>
+        <span>Editar cantidad</span>
+      </div>
+      <button class="prov-close" id="btnCerrarCantidad" type="button">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="qty-kpis">
+        <div class="qty-kpi">
+          <div class="qty-kpi-label">Artículo</div>
+          <div class="qty-kpi-value" id="qtyArticuloTxt">-</div>
+        </div>
+        <div class="qty-kpi right">
+          <div class="qty-kpi-label">Stock</div>
+          <div class="qty-kpi-value" id="qtyStockTxt">0</div>
+        </div>
+      </div>
+
+      <div class="qty-editor">
+        <div class="qty-input-wrap">
+          <label class="qty-label" for="qtyCantidad">Cantidad</label>
+          <input id="qtyCantidad" class="qty-input" type="text" inputmode="decimal" placeholder="Ej. 12 ó 0.35">
+          <div class="qty-hint">Tip: puedes usar punto o coma. Enter = Guardar • Esc = Cancelar</div>
+        </div>
+
+        <div class="qty-stepper">
+          <button class="btn secondary qty-step" id="btnQtyMenos" type="button">−</button>
+          <button class="btn secondary qty-step" id="btnQtyMas" type="button">+</button>
+          <button class="btn secondary qty-step" id="btnQtyMenos10" type="button">−0.10</button>
+          <button class="btn secondary qty-step" id="btnQtyMas10" type="button">+0.10</button>
+        </div>
+
+        <div class="qty-error" id="qtyError" style="display:none;"></div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn secondary" id="btnCancelarCantidad" type="button">Cancelar</button>
+      <button class="btn primary" id="btnGuardarCantidad" type="button">✅ Guardar</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: RECUPERAR VENTA EN ESPERA -->
 <div class="modal" id="modalEspera" style="display:none;">
   <div class="modal-window" style="width:760px; max-width:95%;">
@@ -237,7 +285,6 @@
 
   </div>
 </div>
-
 
 <?php require_once __DIR__ . '/modal_cobro.php'; ?>
 <script src="/public/assets/js/operaciones/ventas.js"></script>
