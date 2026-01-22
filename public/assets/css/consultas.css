@@ -1,0 +1,89 @@
+/* ================================
+   CONSULTAS - ESTILO SICAR (igual Operaciones)
+   - Basado en operaciones.css
+   - Usando tus clases: consultas-page, consultas-grid, consulta-card, card-ico
+================================ */
+
+/* CONTENEDOR */
+.consultas-page{
+  padding: 25px;
+}
+
+/* TÍTULO */
+.consultas-page .module-title{
+  text-align: center;
+  color: #1f548c;
+  margin-bottom: 25px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* GRID */
+.consultas-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 25px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* TARJETAS */
+.consulta-card{
+  background: #fff;
+  padding: 22px 15px;
+  text-align: center;
+  border-radius: 12px;
+  cursor: pointer;
+
+  border-top: 4px solid #1f548c;
+  box-shadow: 0 2px 10px rgba(0,0,0,.10);
+
+  transition: transform .2s ease, box-shadow .2s ease;
+  user-select: none;
+}
+
+.consulta-card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,.20);
+}
+
+/* ICONO */
+.consulta-card .card-ico{
+  font-size: 46px;
+  line-height: 1;
+  margin-bottom: 10px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #1f548c;
+}
+
+/* TÍTULO */
+.consulta-card h3{
+  margin: 8px 0 2px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #222;
+}
+
+/* SUBTÍTULO */
+.consulta-card p{
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* ================================
+   RESPONSIVE FINO
+================================ */
+@media (max-width: 520px){
+  .consultas-page .module-title{
+    font-size: 26px;
+  }
+
+  .consulta-card .card-ico{
+    font-size: 42px;
+  }
+}

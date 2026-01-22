@@ -30,12 +30,12 @@
             <span class="menu-ico">💵</span>
             <span>Operaciones</span>
         </div>
-<!--
+
         <div class="menu-item" onclick="location.href='/consultas'">
             <span class="menu-ico">🔍</span>
             <span>Consultas</span>
         </div>
-
+<!--
         <div class="menu-item" onclick="location.href='/procesos'">
             <span class="menu-ico">⚙️</span>
             <span>Procesos</span>

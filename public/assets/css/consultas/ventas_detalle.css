@@ -1,0 +1,402 @@
+/* =========================================
+   CONSULTAS > DETALLE DE VENTAS
+   - Replica vibe COMPRAS (shell, paddings, tipografía)
+========================================= */
+
+.vd-page{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:14px 18px 18px;
+  box-sizing:border-box;
+  background:#f6f8fc;
+
+  /* Fuente moderna sin imports (igual Compras) */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+               Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  color:#0f172a;
+}
+
+/* Header superior */
+.vd-header{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:12px;
+  text-align:center;
+}
+
+.module-title{
+  margin:0;
+  font-weight:700; /* suave como Compras */
+  color:#0f172a;
+  letter-spacing:.2px;
+}
+
+.vd-sub{
+  color:#64748b;
+  font-weight:500;
+  font-size:13px;
+}
+
+/* =========================
+   BOTONES (igual Compras)
+========================= */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:12px;
+  border:1px solid rgba(15,23,42,.08);
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
+  line-height:1;
+  user-select:none;
+  transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+  box-shadow:0 10px 22px rgba(2,6,23,.10);
+}
+.btn:active{ transform: translateY(1px); }
+.btn:hover{ filter: brightness(.98); }
+
+.btn.primary{ background:#0d6efd; color:#fff; border-color: rgba(13,110,253,.35); }
+.btn.secondary{ background:#e2e8f0; color:#0f172a; border-color:#cbd5e1; }
+
+/* =========================
+   SUPER CARD (TODO JUNTO)
+========================= */
+.vd-shell{
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  border:1px solid rgba(226,232,240,.95);
+  border-radius:20px;
+  box-shadow: 0 24px 70px rgba(2,6,23,.12);
+  overflow:hidden;
+}
+
+/* Secciones internas */
+.vd-section{
+  padding:16px 16px 14px;
+}
+
+.section-divider{
+  height:1px;
+  background: linear-gradient(90deg, transparent, rgba(148,163,184,.35), transparent);
+}
+
+/* Head de sección */
+.section-head{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-bottom:10px;
+}
+
+.section-head-row{
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:12px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+  color:#0f172a;
+}
+
+.section-dot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background:#0d6efd;
+  box-shadow:0 0 0 4px rgba(13,110,253,.14);
+}
+
+.section-sub{
+  font-size:12px;
+  font-weight:500;
+  color:#64748b;
+}
+
+/* =========================
+   FIELDS / INPUTS (igual Compras)
+========================= */
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width: 170px;
+}
+
+.field.grow{
+  flex: 1 1 320px;
+  min-width: 260px;
+}
+
+.field label{
+  display:inline-flex;
+  align-items:center;
+  width:max-content;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#eef2ff;
+  border:1px solid rgba(99,102,241,.22);
+  font-size:11px;
+  font-weight:600;
+  color:#1e293b;
+  letter-spacing:.35px;
+  text-transform:uppercase;
+}
+
+.vd-page input,
+.vd-page select{
+  width:100%;
+  padding:14px 16px;
+  font-size:14px;
+  font-weight:500;
+  border-radius:14px;
+  border:1px solid rgba(148,163,184,.55);
+  outline:none;
+  box-sizing:border-box;
+  background: linear-gradient(180deg, #ffffff 0%, #f5f9ff 100%);
+  box-shadow:
+    0 10px 22px rgba(2,6,23,.06),
+    inset 0 1px 0 rgba(255,255,255,.9);
+  transition: transform .10s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
+}
+
+.vd-page input::placeholder{ color:#94a3b8; font-weight:400; }
+
+.vd-page input:focus,
+.vd-page select:focus{
+  background:#fff;
+  border-color:#2563eb;
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,.14),
+    0 18px 40px rgba(2,6,23,.12),
+    inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+/* Toolbar */
+.vd-toolbar{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  align-items:flex-end;
+}
+
+.vd-actions{
+  display:flex;
+  gap:10px;
+  margin-left:auto;
+  flex-wrap:wrap;
+}
+
+/* =========================
+   TABLA (igual Compras)
+========================= */
+.table-wrap{
+  border-radius:16px;
+  border:1px solid rgba(148,163,184,.35);
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 14px 30px rgba(2,6,23,.08);
+}
+
+.vd-table,
+.module-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+}
+
+.vd-table thead th{
+  background:#0f172a;
+  color:#fff;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.4px;
+  padding:13px 12px;
+  text-transform:uppercase;
+  text-align:left;
+}
+
+.vd-table tbody td{
+  padding:12px;
+  border-top:1px solid rgba(226,232,240,.95);
+  font-size:14px;
+  color:#0f172a;
+  background:#fff;
+  vertical-align:middle;
+  font-weight:400;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.vd-table tbody tr:hover td{
+  background:#f8fafc;
+  cursor:pointer;
+}
+
+.vd-table .num{
+  text-align:right;
+  font-variant-numeric: tabular-nums;
+}
+
+.vd-empty{
+  text-align:center;
+  color:#64748b;
+  padding:18px !important;
+  font-weight:600;
+}
+.vd-empty.error{ color:#b91c1c; }
+
+/* Badges */
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  border:1px solid transparent;
+  white-space:nowrap;
+}
+.badge.credito{ background:#fff3cd; color:#7a5b00; border-color:#ffe69c; }
+.badge.contado{ background:#ecfdf3; color:#15803d; border-color:#bbf7d0; }
+
+/* =========================
+   MODAL (base estilo Compras)
+========================= */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.modal[style*="flex"]{ display:flex !important; }
+.modal[style*="block"]{ display:flex !important; }
+
+.modal-window{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 30px 90px rgba(0,0,0,.40);
+  overflow:hidden;
+  border:1px solid rgba(148,163,184,.35);
+  width: 920px;
+  max-width:96%;
+}
+
+.modal-header{
+  background: linear-gradient(135deg, #0d6efd 0%, #2563eb 55%, #1d4ed8 100%);
+  color:#fff;
+  padding:14px 18px;
+  font-size:16px;
+  font-weight:700;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:relative;
+}
+.modal-header::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(900px 120px at 20% 0%, rgba(255,255,255,.22), transparent 60%),
+    radial-gradient(700px 120px at 80% 0%, rgba(255,255,255,.14), transparent 60%);
+  pointer-events:none;
+  mix-blend-mode: soft-light;
+}
+
+.prov-close{
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  background: rgba(255,255,255,.16);
+  border: 1px solid rgba(255,255,255,.35);
+  color:#fff;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: filter .12s ease, transform .08s ease;
+  box-shadow: 0 10px 18px rgba(0,0,0,.18);
+}
+.prov-close:hover{ filter: brightness(1.08); }
+.prov-close:active{ transform: translateY(1px); }
+
+.modal-body{
+  padding:16px 18px 18px;
+  background:
+    radial-gradient(900px 180px at 50% 0%, rgba(37,99,235,.08), transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+}
+
+.modal-footer{
+  padding:12px 18px;
+  border-top:1px solid rgba(226,232,240,.95);
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  background:#f8fafc;
+}
+
+/* Meta del modal */
+.vd-modal-meta{ margin-bottom:12px; }
+
+.vd-meta-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:12px;
+  background:#f8fafc;
+  border:1px solid rgba(226,232,240,.95);
+  border-radius:12px;
+  padding:12px;
+}
+
+.vd-meta-grid .k{
+  font-size:12px;
+  font-weight:600;
+  color:#334155;
+}
+.vd-meta-grid .v{
+  margin-top:4px;
+  font-weight:700;
+  color:#0f172a;
+}
+
+/* =========================
+   FIX TOPMENU: más aire en .menu-item
+========================= */
+nav.topmenu{
+  padding: 10px 14px;          /* aire dentro de la barra */
+  box-sizing: border-box;
+}
+
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 1100px){
+  .vd-actions{ width:100%; justify-content:flex-end; margin-left:0; }
+}
+
+@media (max-width: 720px){
+  .vd-page{ padding:14px 12px 18px; }
+  .vd-toolbar{ flex-direction:column; align-items:stretch; }
+  .vd-actions{ justify-content:stretch; }
+  .btn{ width:100%; }
+  .vd-meta-grid{ grid-template-columns: 1fr; }
+}

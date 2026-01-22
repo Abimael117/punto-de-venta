@@ -38,6 +38,24 @@ $routes = [
         'action' => 'index'
     ],
 
+    // =========================
+    // CONSULTAS - VENTAS DETALLE
+    // =========================
+    '/consultas/ventas-detalle' => [
+        'controller' => 'consultas/VentasDetalleController',
+        'action'     => 'index'
+    ],
+
+    '/consultas/ventas-detalle/listar' => [
+        'controller' => 'consultas/VentasDetalleController',
+        'action'     => 'listar'
+    ],
+
+    '/consultas/ventas-detalle/detalle' => [
+        'controller' => 'consultas/VentasDetalleController',
+        'action'     => 'detalle'
+    ],
+
     '/procesos' => [
         'controller' => 'ProcesosController',
         'action' => 'index'
@@ -548,13 +566,9 @@ $routes = [
     ],
 
     '/operaciones/ajuste-inventario/articulos' => [
-    'controller' => 'operaciones/AjusteInventarioController',
-    'action'     => 'articulos'
+        'controller' => 'operaciones/AjusteInventarioController',
+        'action'     => 'articulos'
     ],
-
-
-
-
 
 ];
 
