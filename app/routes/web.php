@@ -127,6 +127,36 @@ $routes = [
     ],
 
     // =========================
+    // CONSULTAS - COMPRAS A CRÉDITO
+    // =========================
+
+    '/consultas/compras-credito' => [
+        'controller' => 'consultas/ComprasCreditoController',
+        'action'     => 'index'
+    ],
+
+    '/consultas/compras-credito/listar' => [
+        'controller' => 'consultas/ComprasCreditoController',
+        'action'     => 'listar'
+    ],
+
+    '/consultas/compras-credito/detalle' => [
+        'controller' => 'consultas/ComprasCreditoController',
+        'action'     => 'detalle'
+    ],
+
+    '/consultas/compras-credito/abonar' => [
+        'controller' => 'consultas/ComprasCreditoController',
+        'action'     => 'abonar'
+    ],
+
+    '/consultas/compras-credito/marcarPagada' => [
+        'controller' => 'consultas/ComprasCreditoController',
+        'action'     => 'marcarPagada'
+    ],
+
+
+    // =========================
     // CONFIGURACIÓN - UNIDADES
     // =========================
 

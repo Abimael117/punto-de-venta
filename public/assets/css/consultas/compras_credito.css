@@ -1,0 +1,562 @@
+/* =========================================
+   COMPRAS A CRÉDITO – UI PRO
+========================================= */
+
+.cc-page{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:14px 18px 18px;
+  box-sizing:border-box;
+  background:#f2f6fb;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+               Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  color:#0f172a;
+}
+
+.cc-header{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.module-title{
+  text-align:center;
+  margin:0;
+  font-weight:700;
+  color:#0f172a;
+  letter-spacing:.2px;
+}
+
+.cc-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* Botones */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:12px;
+  border:1px solid rgba(15,23,42,.08);
+  cursor:pointer;
+  font-weight:700;
+  font-size:14px;
+  line-height:1;
+  user-select:none;
+  transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
+  box-shadow:0 10px 22px rgba(2,6,23,.10);
+  background:#e8edff;
+  color:#0f172a;
+}
+.btn:active{ transform: translateY(1px); }
+.btn:hover{ filter: brightness(.98); }
+
+.btn.primary{
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color:#fff;
+  border-color: rgba(37,99,235,.35);
+}
+.btn.danger{
+  background:#dc3545;
+  color:#fff;
+  border-color: rgba(220,53,69,.35);
+}
+.btn.success{
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color:#fff;
+  border-color: rgba(22,163,74,.35);
+}
+
+/* Shell */
+.cc-shell{
+  background:#fff;
+  border:1px solid rgba(37,99,235,.12);
+  border-radius:20px;
+  box-shadow: 0 28px 80px rgba(2,6,23,.12);
+  overflow:hidden;
+  padding:14px 0;
+}
+
+/* Filtros */
+.cc-filters{
+  padding:0 16px 12px;
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:12px;
+  align-items:end;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.field.full{ grid-column: 1 / -1; }
+
+.field label{
+  display:inline-flex;
+  align-items:center;
+  width:max-content;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#e8efff;
+  border:1px solid rgba(37,99,235,.35);
+  font-size:11px;
+  font-weight:600;
+  color:#1e3a8a;
+  letter-spacing:.35px;
+  text-transform:uppercase;
+}
+
+.cc-page input,
+.cc-page select{
+  width:100%;
+  padding:14px 16px;
+  font-size:14px;
+  font-weight:500;
+  border-radius:14px;
+  border:1px solid #c7d2fe;
+  outline:none;
+  box-sizing:border-box;
+  background:#f8fbff;
+  box-shadow:
+    0 10px 22px rgba(2,6,23,.06),
+    inset 0 1px 0 rgba(255,255,255,.9);
+  transition: transform .10s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
+}
+
+.cc-page input:focus,
+.cc-page select:focus{
+  background:#fff;
+  border-color:#2563eb;
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,.18),
+    0 18px 40px rgba(2,6,23,.14),
+    inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+.cc-divider{
+  height:1px;
+  margin: 0 16px 12px;
+  background: linear-gradient(90deg, transparent, rgba(37,99,235,.25), transparent);
+}
+
+/* Resumen */
+.cc-topline{
+  padding:0 16px 12px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.cc-pill{
+  padding:10px 12px;
+  border-radius:999px;
+  background:#eef4ff;
+  border:1px solid rgba(37,99,235,.25);
+  box-shadow:0 10px 20px rgba(2,6,23,.06);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:600;
+}
+.cc-pill span{ color:#334155; font-size:12px; font-weight:600; }
+.cc-pill strong{ color:#0f172a; font-weight:700; font-variant-numeric: tabular-nums; }
+.cc-pill.big{
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  border-color: rgba(22,163,74,.35);
+  color:#14532d;
+}
+
+/* Tabla */
+.cc-tablewrap{
+  margin: 0 16px 14px;
+  border-radius:16px;
+  border:1px solid rgba(37,99,235,.18);
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 16px 38px rgba(2,6,23,.10);
+}
+
+.cc-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+}
+
+.cc-table thead th{
+  background: linear-gradient(180deg, #0f172a, #020617);
+  color:#fff;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.4px;
+  padding:13px 12px;
+  text-transform:uppercase;
+}
+
+.cc-table tbody td{
+  padding:12px;
+  border-top:1px solid rgba(226,232,240,.95);
+  font-size:14px;
+  color:#0f172a;
+  background:#fff;
+  vertical-align:middle;
+  font-weight:400;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.cc-table tbody tr:hover td{ background:#f1f5ff; }
+.cc-table tbody tr.selected td{
+  background:#e0ebff !important;
+  box-shadow: inset 0 0 0 9999px rgba(37,99,235,.06);
+}
+.cc-table tbody tr.selected td:first-child{ border-left:4px solid #2563eb; }
+
+/* Estatus badge */
+.cc-status{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:12px;
+  border:1px solid transparent;
+}
+.cc-status.st-pendiente{
+  background:#fff7ed;
+  border-color: rgba(249,115,22,.35);
+  color:#9a3412;
+}
+.cc-status.st-pagada{
+  background:#dcfce7;
+  border-color: rgba(22,163,74,.35);
+  color:#14532d;
+}
+
+/* Modales base (reusa tu estilo) */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(2,6,23,.62);
+  backdrop-filter: blur(6px);
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+.modal[style*="flex"]{ display:flex !important; }
+.modal[style*="block"]{ display:flex !important; }
+
+.modal-window{
+  background:#fff;
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,.35);
+  box-shadow: 0 40px 120px rgba(0,0,0,.55);
+  overflow:hidden;
+  max-width:96%;
+}
+
+.modal-header{
+  background: linear-gradient(135deg, #0d6efd 0%, #2563eb 55%, #1d4ed8 100%);
+  color:#fff;
+  padding:14px 18px;
+  font-size:16px;
+  font-weight:700;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.modal-body{
+  padding:16px 18px 18px;
+  background:
+    radial-gradient(900px 180px at 50% 0%, rgba(37,99,235,.08), transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+}
+
+.modal-footer{
+  padding:12px 18px;
+  border-top:1px solid rgba(226,232,240,.95);
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  background:#f8fafc;
+}
+
+.prov-close{
+  background:rgba(255,255,255,.16);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.35);
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: filter .12s ease, transform .08s ease;
+}
+.prov-close:hover{ filter: brightness(1.08); }
+.prov-close:active{ transform: translateY(1px); }
+
+/* Detalle grid */
+.cc-det-grid{
+  display:grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  gap:12px;
+}
+
+.cc-card{
+  background:#fff;
+  border:1px solid rgba(37,99,235,.12);
+  border-radius:16px;
+  box-shadow:0 14px 30px rgba(2,6,23,.08);
+  padding:12px 12px;
+}
+
+.cc-card-title{
+  font-weight:800;
+  margin-bottom:10px;
+  color:#0f172a;
+}
+
+.cc-kv{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:6px 0;
+  border-bottom:1px dashed rgba(148,163,184,.35);
+  font-variant-numeric: tabular-nums;
+}
+.cc-kv:last-child{ border-bottom:none; }
+.cc-kv span{ color:#475569; font-weight:600; }
+.cc-kv strong{ color:#0f172a; font-weight:800; }
+
+.cc-mini-tablewrap{
+  border-radius:14px;
+  border:1px solid rgba(148,163,184,.35);
+  overflow:hidden;
+  background:#fff;
+}
+
+.cc-mini-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+}
+.cc-mini-table thead th{
+  background:#0f172a;
+  color:#fff;
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:.35px;
+  padding:10px;
+  text-transform:uppercase;
+}
+.cc-mini-table tbody td{
+  padding:10px;
+  border-top:1px solid rgba(226,232,240,.95);
+  font-size:13px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.cc-muted{
+  margin-top:10px;
+  color:#64748b;
+  font-weight:600;
+}
+
+/* Abono form */
+.cc-form{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:12px;
+}
+.cc-form .full{ grid-column: 1 / -1; }
+
+.cc-form .field.check .check-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px dashed rgba(37,99,235,.25);
+  background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%);
+}
+
+.cc-form .check-row input[type="checkbox"]{
+  appearance:none;
+  width:52px;
+  height:28px;
+  border-radius:999px;
+  background:#e2e8f0;
+  border:1px solid #cbd5e1;
+  cursor:pointer;
+  position:relative;
+  transition: all .18s ease;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,.12);
+}
+.cc-form .check-row input[type="checkbox"]::after{
+  content:"";
+  position:absolute;
+  top:3px;
+  left:3px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 6px 14px rgba(0,0,0,.20);
+  transition: all .18s ease;
+}
+.cc-form .check-row input[type="checkbox"]:checked{
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border-color:#2563eb;
+}
+.cc-form .check-row input[type="checkbox"]:checked::after{
+  transform: translateX(24px);
+}
+.cc-form .check-row span{
+  font-size:12px;
+  font-weight:600;
+  color:#0f172a;
+  line-height:1.2;
+}
+
+.cc-abono-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+/* =========================
+   FIX: alineación columnas tabla (TOTAL/SALDO/ESTATUS)
+   - Fuerza anchos consistentes con table-layout:fixed
+   - Centra ESTATUS
+========================= */
+
+.cc-table thead th,
+.cc-table tbody td{
+  box-sizing: border-box;
+}
+
+/* Anchos por columna (ajústalos si quieres) */
+.cc-table thead th:nth-child(1),
+.cc-table tbody td:nth-child(1){ width: 18%; }  /* PROVEEDOR */
+
+.cc-table thead th:nth-child(2),
+.cc-table tbody td:nth-child(2){ width: 22%; }  /* FOLIO */
+
+.cc-table thead th:nth-child(3),
+.cc-table tbody td:nth-child(3){ width: 12%; }  /* FECHA */
+
+.cc-table thead th:nth-child(4),
+.cc-table tbody td:nth-child(4){ width: 12%; }  /* VENCE */
+
+.cc-table thead th:nth-child(5),
+.cc-table tbody td:nth-child(5){ width: 12%; }  /* TOTAL */
+
+.cc-table thead th:nth-child(6),
+.cc-table tbody td:nth-child(6){ width: 12%; }  /* SALDO */
+
+.cc-table thead th:nth-child(7),
+.cc-table tbody td:nth-child(7){ width: 12%; }  /* ESTATUS */
+
+/* Alineaciones */
+.cc-table thead th:nth-child(5),
+.cc-table thead th:nth-child(6),
+.cc-table tbody td:nth-child(5),
+.cc-table tbody td:nth-child(6){
+  text-align: right;
+}
+
+.cc-table thead th:nth-child(7),
+.cc-table tbody td:nth-child(7){
+  text-align: center;
+}
+
+/* Que el badge no “se sienta” cortado */
+.cc-table tbody td:nth-child(7){
+  overflow: visible;
+  text-overflow: clip;
+}
+
+/* Opcional: evita que el strong del saldo ensanche raro */
+.cc-table tbody td:nth-child(6) strong{
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================
+   FIX: alineación por columna (TH y TD)
+   - Centra las columnas que deben ir centradas
+   - Deja TOTAL/SALDO a la derecha
+========================= */
+
+/* Por defecto, texto a la izquierda */
+.cc-table thead th,
+.cc-table tbody td{
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* Centrar: FOLIO, FECHA, VENCE, ESTATUS (ajusta si quieres) */
+.cc-table thead th:nth-child(2),
+.cc-table thead th:nth-child(3),
+.cc-table thead th:nth-child(4),
+.cc-table thead th:nth-child(7),
+.cc-table tbody td:nth-child(2),
+.cc-table tbody td:nth-child(3),
+.cc-table tbody td:nth-child(4),
+.cc-table tbody td:nth-child(7){
+  text-align: center;
+}
+
+/* Derecha: TOTAL, SALDO */
+.cc-table thead th:nth-child(5),
+.cc-table thead th:nth-child(6),
+.cc-table tbody td:nth-child(5),
+.cc-table tbody td:nth-child(6){
+  text-align: right;
+}
+
+/* Que el badge quede centrado bonito */
+.cc-table tbody td:nth-child(7){
+  overflow: visible;
+  text-overflow: clip;
+}
+.cc-table tbody td:nth-child(7) .cc-status{
+  justify-content: center;
+}
+
+
+/* Responsive */
+@media (max-width: 1100px){
+  .cc-filters{ grid-template-columns: repeat(2, 1fr); }
+  .cc-det-grid{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px){
+  .cc-actions{ flex-direction:column; align-items:stretch; }
+  .btn{ width:100%; }
+  .cc-filters{ grid-template-columns: 1fr; }
+  .cc-topline{ justify-content:flex-start; }
+  .cc-form{ grid-template-columns: 1fr; }
+}

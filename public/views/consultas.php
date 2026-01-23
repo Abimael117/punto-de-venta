@@ -13,12 +13,12 @@
       </div>
     </div>
 
-    <!-- Ventas a crédito -->
-    <div class="consulta-card" onclick="location.href='/consultas/ventas-credito'" role="button" tabindex="0">
-      <div class="card-ico">💳</div>
+    <!-- Compras -->
+    <div class="consulta-card" onclick="location.href='/consultas/compras'" role="button" tabindex="0">
+      <div class="card-ico">📥</div>
       <div class="card-txt">
-        <h3>Ventas a Crédito</h3>
-        <p>Saldos y vencimientos</p>
+        <h3>Compras</h3>
+        <p>Historial de compras</p>
       </div>
     </div>
 
@@ -31,15 +31,15 @@
       </div>
     </div>
 
-    <!-- Compras -->
-    <div class="consulta-card" onclick="location.href='/consultas/compras'" role="button" tabindex="0">
-      <div class="card-ico">📥</div>
+    <!-- Ventas a crédito -->
+    <div class="consulta-card" onclick="location.href='/consultas/ventas-credito'" role="button" tabindex="0">
+      <div class="card-ico">💳</div>
       <div class="card-txt">
-        <h3>Compras</h3>
-        <p>Historial de compras</p>
+        <h3>Ventas a Crédito</h3>
+        <p>Saldos y vencimientos</p>
       </div>
     </div>
-
+    
     <!-- Compras a crédito -->
     <div class="consulta-card" onclick="location.href='/consultas/compras-credito'" role="button" tabindex="0">
       <div class="card-ico">🏦</div>
