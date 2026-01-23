@@ -9,9 +9,8 @@
       <div class="card-ico">🧾</div>
       <div class="card-txt">
         <h3>Ventas</h3>
-        <p>Historial de ventas realizadas</p>
+        <p>Historial de ventas</p>
       </div>
-      <div class="card-go">›</div>
     </div>
 
     <!-- Ventas a crédito -->
@@ -19,9 +18,8 @@
       <div class="card-ico">💳</div>
       <div class="card-txt">
         <h3>Ventas a Crédito</h3>
-        <p>Ventas fiadas, saldos y vencimientos</p>
+        <p>Saldos y vencimientos</p>
       </div>
-      <div class="card-go">›</div>
     </div>
 
     <!-- Detalle de ventas -->
@@ -29,9 +27,8 @@
       <div class="card-ico">📦</div>
       <div class="card-txt">
         <h3>Detalle de Ventas</h3>
-        <p>Artículos vendidos por venta</p>
+        <p>Artículos vendidos</p>
       </div>
-      <div class="card-go">›</div>
     </div>
 
     <!-- Compras -->
@@ -39,9 +36,8 @@
       <div class="card-ico">📥</div>
       <div class="card-txt">
         <h3>Compras</h3>
-        <p>Historial de compras a proveedores</p>
+        <p>Historial de compras</p>
       </div>
-      <div class="card-go">›</div>
     </div>
 
     <!-- Compras a crédito -->
@@ -49,9 +45,8 @@
       <div class="card-ico">🏦</div>
       <div class="card-txt">
         <h3>Compras a Crédito</h3>
-        <p>Cuentas por pagar y vencimientos</p>
+        <p>Cuentas por pagar</p>
       </div>
-      <div class="card-go">›</div>
     </div>
 
     <!-- Movimientos de inventario -->
@@ -59,9 +54,8 @@
       <div class="card-ico">📊</div>
       <div class="card-txt">
         <h3>Inventario</h3>
-        <p>Entradas y salidas de artículos</p>
+        <p>Entradas y salidas</p>
       </div>
-      <div class="card-go">›</div>
     </div>
 
   </div>

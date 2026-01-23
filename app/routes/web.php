@@ -102,6 +102,31 @@ $routes = [
     ],
 
     // =========================
+    // CONSULTAS - VENTAS A CRÉDITO (TOTAL POR CLIENTE)
+    // =========================
+    '/consultas/ventas-credito' => [
+        'controller' => 'consultas/VentasCreditoController',
+        'action'     => 'index'
+    ],
+
+    '/consultas/ventas-credito/listar' => [
+        'controller' => 'consultas/VentasCreditoController',
+        'action'     => 'listar'
+    ],
+
+    // Detalle por cliente (desglose de créditos)
+    '/consultas/ventas-credito/detalle' => [
+        'controller' => 'consultas/VentasCreditoController',
+        'action'     => 'detalle'
+    ],
+
+    // Detalle de un crédito (incluye pagos/abonos)
+    '/consultas/ventas-credito/credito' => [
+        'controller' => 'consultas/VentasCreditoController',
+        'action'     => 'credito'
+    ],
+
+    // =========================
     // CONFIGURACIÓN - UNIDADES
     // =========================
 
