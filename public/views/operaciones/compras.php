@@ -27,10 +27,7 @@
       <div class="compras-head">
         <div class="head-grid">
 
-          <div class="field">
-            <label>Folio</label>
-            <input type="text" id="compraFolio" value="(auto)" readonly>
-          </div>
+          <!-- ❌ Folio fuera (es automático y no aporta) -->
 
           <div class="field">
             <label>Fecha y hora</label>
@@ -137,7 +134,6 @@
           </div>
         </div>
 
-        <!-- Totales “pegados” arriba a la derecha para que se sienta integrado -->
         <div class="totales-inline">
           <div class="total-mini">
             <span>Subtotal</span>
@@ -168,9 +164,6 @@
           <tbody id="detalleCompra"></tbody>
         </table>
       </div>
-
-      <!-- (si quieres los totales abajo también, lo podemos duplicar,
-           pero arriba ya queda más “pro” y menos fragmentado) -->
     </div>
 
   </div><!-- /compras-shell -->

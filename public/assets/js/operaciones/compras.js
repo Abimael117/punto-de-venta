@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const impSpan   = document.getElementById('impuestosCompra');
 
   // Cabecera
-  const compraFolio     = document.getElementById('compraFolio');
+  const compraFolio     = document.getElementById('compraFolio'); // (ya no existe en vista, pero no truena)
   const compraFechaHora = document.getElementById('compraFechaHora');
   const compraTipo      = document.getElementById('compraTipo');
   const compraMetodo    = document.getElementById('compraMetodo');
@@ -40,7 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let detalle = [];
   let scanTimeout = null;
   let codigoPendiente = null;
+
+  // Modal cantidad state
   let articuloActual = null;
+  let editIndex = null; // ✅ cuando no es null, estamos editando una línea existente
 
   // Remover (selección)
   let filaSeleccionadaIndex = -1;
@@ -60,8 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================
-  // ✅ CLICK EN CUALQUIER PARTE = ENFOCAR INPUT ESCÁNER (como ventas.js)
-  // (excepto botones/inputs/links y cuando hay modales abiertos)
+  // ✅ CLICK EN CUALQUIER PARTE = ENFOCAR INPUT ESCÁNER
   // =========================================================
   function isOpen(el) {
     return !!el && el.style.display !== 'none' && el.style.display !== '';
@@ -77,19 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function shouldIgnoreClickTarget(target) {
     if (!target) return true;
-
-    // No robamos foco si el click es en algo editable
     if (target.closest('input, textarea, select, [contenteditable="true"]')) return true;
-
-    // No robamos foco si es un botón/link o algo clickeable
     if (target.closest('button, a, .btn, [role="button"]')) return true;
-
-    // Si el click es en la tabla detalle, respeta selección
     if (target.closest('#detalleCompra')) return true;
-
-    // Si algún día ocupas excluir algo puntual
     if (target.closest('[data-no-refocus="1"]')) return true;
-
     return false;
   }
 
@@ -100,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const t = e.target;
     if (shouldIgnoreClickTarget(t)) return;
 
-    // Si está seleccionando texto, respétalo
     const sel = window.getSelection?.();
     if (sel && sel.toString && sel.toString().trim().length > 0) return;
 
@@ -315,6 +307,17 @@ document.addEventListener('DOMContentLoaded', () => {
     filaSeleccionadaIndex = parseInt(tr.dataset.index, 10);
   });
 
+  // ✅ Doble click fila detalle => abrir modal cantidad para EDITAR
+  tbody?.addEventListener('dblclick', (e) => {
+    const tr = e.target.closest('tr[data-index]');
+    if (!tr) return;
+    const idx = parseInt(tr.dataset.index, 10);
+    if (Number.isNaN(idx) || !detalle[idx]) return;
+
+    filaSeleccionadaIndex = idx;
+    abrirModalCantidadDesdeDetalle(idx);
+  });
+
   // Teclas POS
   document.addEventListener('keydown', (e) => {
 
@@ -332,10 +335,23 @@ document.addEventListener('DOMContentLoaded', () => {
       const tag = (document.activeElement?.tagName || '').toLowerCase();
       const estaEscribiendo = tag === 'input' || tag === 'textarea' || tag === 'select';
       if (estaEscribiendo) return;
+      if (isAnyModalOpen()) return;
+      removerSeleccionado();
+    }
 
+    // ✅ ENTER sobre detalle seleccionado => editar cantidad
+    if (e.key === 'Enter') {
       if (isAnyModalOpen()) return;
 
-      removerSeleccionado();
+      const tag = (document.activeElement?.tagName || '').toLowerCase();
+      const estaEscribiendo = tag === 'input' || tag === 'textarea' || tag === 'select';
+      if (estaEscribiendo) return;
+
+      if (filaSeleccionadaIndex >= 0 && detalle[filaSeleccionadaIndex]) {
+        e.preventDefault();
+        abrirModalCantidadDesdeDetalle(filaSeleccionadaIndex);
+        return;
+      }
     }
 
     // si modal proveedor abierto:
@@ -399,13 +415,14 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        abrirModalCantidad(articulo);
+        // ✅ Escaneado => modal en modo NUEVO (sumará si ya existe)
+        abrirModalCantidad(articulo, null);
       })
       .catch(err => console.error('Error buscarArticulo:', err));
   }
 
   // =========================
-  // AGREGAR LINEA
+  // AGREGAR LINEA (modo NUEVO)
   // =========================
   function agregarLineaConCantidad(articulo, cantidad, costo, extras = {}) {
 
@@ -447,11 +464,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================
-  // MODAL CANTIDAD (tu lógica)
+  // ✅ EDITAR DESDE DETALLE
   // =========================
-  function abrirModalCantidad(articulo) {
+  function abrirModalCantidadDesdeDetalle(idx){
+    const item = detalle[idx];
+    if (!item) return;
+
+    // armamos “articulo” compatible con tu modal
+    const articulo = {
+      id: item.articulo_id,
+      codigo: item.codigo,
+      descripcion: item.descripcion,
+      precio_compra: item.costo
+    };
+
+    abrirModalCantidad(articulo, idx, item);
+  }
+
+  // =========================
+  // MODAL CANTIDAD (NUEVO / EDITAR)
+  // =========================
+  function abrirModalCantidad(articulo, idx = null, itemExistente = null) {
 
     articuloActual = articulo;
+    editIndex = (typeof idx === 'number') ? idx : null;
 
     const modal = document.getElementById('modalCantidadArticulo');
     if (!modal) return;
@@ -473,13 +509,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const impMontoSpan    = document.getElementById('mcImpuestoMonto');
     const importeSpan     = document.getElementById('mcImporte');
 
-    cantidadInput.value = 1;
-    costoInput.value = (articulo.precio_compra ?? 0);
+    // ✅ Prefill: nuevo vs editar
+    if (itemExistente) {
+      cantidadInput.value = Number(itemExistente.cantidad || 1);
+      costoInput.value = Number(itemExistente.costo || 0);
 
-    impuestoSelect.value = '';
-    utilidadInput.value = 20;
+      // impuesto
+      impuestoSelect.value = itemExistente.impuesto_id ? String(itemExistente.impuesto_id) : '';
 
-    pvInput.dataset.manual = '';
+      // utilidad / pv
+      utilidadInput.value = Number(itemExistente.utilidad_pct ?? 20);
+
+      pvInput.value = money(itemExistente.precio_venta ?? 0);
+      pvInput.dataset.manual = '1'; // respeta lo que ya tenía
+    } else {
+      cantidadInput.value = 1;
+      costoInput.value = (articulo.precio_compra ?? 0);
+
+      impuestoSelect.value = '';
+      utilidadInput.value = 20;
+
+      pvInput.dataset.manual = '';
+      pvInput.value = '0.00';
+    }
+
     pvInput.oninput = () => { pvInput.dataset.manual = '1'; };
 
     setTimeout(() => cantidadInput.focus(), 10);
@@ -573,7 +626,7 @@ document.addEventListener('DOMContentLoaded', () => {
     input?.select?.();
   });
 
-  // Aceptar cantidad
+  // ✅ Aceptar cantidad (NUEVO o EDITAR)
   document.getElementById('btnAceptarCantidad')?.addEventListener('click', () => {
 
     const cant = parseFloat(document.getElementById('mcCantidad').value) || 1;
@@ -603,20 +656,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const pvField = document.getElementById('mcPrecioVenta');
     const precio_venta = parseFloat(pvField.value) || precio_venta_sugerido;
 
-    agregarLineaConCantidad(
-      articuloActual,
-      cant,
-      costoBase,
-      {
-        impuesto_id,
-        impuesto_tasa,
-        impuesto_monto,
-        costo_con_impuesto,
-        utilidad_pct,
-        precio_venta_sugerido,
-        precio_venta
-      }
-    );
+    // ✅ SI EDITAMOS, actualiza la línea seleccionada (no suma, no crea otra)
+    if (editIndex !== null && detalle[editIndex]) {
+      const it = detalle[editIndex];
+
+      it.cantidad = cant;
+      it.costo = costoBase;
+
+      it.impuesto_id = impuesto_id;
+      it.impuesto_tasa = impuesto_tasa;
+      it.impuesto_monto = impuesto_monto;
+
+      it.costo_con_impuesto = costo_con_impuesto;
+      it.utilidad_pct = utilidad_pct;
+      it.precio_venta_sugerido = precio_venta_sugerido;
+      it.precio_venta = precio_venta;
+
+      filaSeleccionadaIndex = editIndex;
+      render();
+
+    } else {
+      // modo NUEVO: agrega o suma si ya existe
+      agregarLineaConCantidad(
+        articuloActual,
+        cant,
+        costoBase,
+        {
+          impuesto_id,
+          impuesto_tasa,
+          impuesto_monto,
+          costo_con_impuesto,
+          utilidad_pct,
+          precio_venta_sugerido,
+          precio_venta
+        }
+      );
+    }
 
     cerrarModalCantidad();
     input?.focus();
@@ -633,6 +708,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const m = document.getElementById('modalCantidadArticulo');
     if (m) m.style.display = 'none';
     articuloActual = null;
+    editIndex = null;
   }
 
   // Guardar artículo (AJAX)
@@ -755,7 +831,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      // (folio ya no se muestra, pero no estorba)
       if (compraFolio) compraFolio.value = j.folio || '(auto)';
+
       alert(`✅ Compra guardada${j.folio ? ` (${j.folio})` : ''}`);
       location.reload();
 
